@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>CKAN Embed Test</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="../node_modules/lodash/lodash.min.js" charset="utf8"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/ckan.js" charset="utf8"></script>
+    <script src="../ckan-embed.js"></script>
+    <style>
+      body > div { margin-bottom: 2em; }
+      /* A bit of formatting for the embedded results */
+      .ckan-dataset {
+        border-bottom: 1px solid #ccc;
+        padding: 15px 0px;
+        margin-top: 5px;
+        background-position: right 5px;
+        background-size: auto 20px;
+        background-repeat: no-repeat;
+      }
+      .ckan-dataset h5 {
+        font-weight: bold;
+        font-size: 150%;
+        color: #009688;
+        margin: 10px 0 0;
+      }
+      #opendata-swiss .ckan-dataset {
+        background-image: url('https://opendata.swiss/content/themes/wp-ogdch-theme/assets/images/logo_horizontal.svg');
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CKAN Embed</h1>
+
+    <div id="opendata-swiss"></div>
+
+<script>
+var ex1;
+
+// Opendata.swiss
+ck.embed('#opendata-swiss', 'https://opendata.swiss/', 'RDF',
+  function(error, result) {
+    ex1 = result;
+    if (error) console.error(error);
+    if (result) console.info(result);
+  });
+
+</script>
+  </body>
+</html>

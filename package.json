@@ -1,0 +1,53 @@
+{
+  "name": "ckan-embed",
+  "version": "0.0.1",
+  "description": "Embed information from CKAN data portals into other websites.",
+  "keywords": [
+    "ckan",
+    "portal",
+    "data",
+    "dataset",
+    "embed"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/datalets/ckan-embed.git"
+  },
+  "author": {
+    "name": "Oleg Lavrovsky",
+    "url": "http://datalets.ch"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "main": "src/embed.js",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "chai": "^3.5.0",
+    "jquery": "^3.1.1",
+    "ckan": "^0.2.3",
+    "lodash": "^3.7.0",
+    "jshint": "^2.9.1",
+    "mocha": "^2.4.5",
+    "uglify-js": "^2.6.2",
+    "watchify": "^3.7.0"
+  },
+  "scripts": {
+    "deploy": "npm run lint && npm run test && scripts/deploy.sh",
+    "lint": "jshint src/",
+    "test": "mocha --timeout 5000 --recursive test/",
+    "build": "browserify src/embed.js -d -s ck.embed > ckan-embed.js",
+    "postbuild": "uglifyjs ckan-embed.js -cm > ckan-embed.min.js",
+    "watch": "watchify src/embed.js -v -d -s ck.embed -o ckan-embed.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:jquery",
+    "lodash": "global:lodash",
+    "ckan": "global:ckan"
+  }
+}

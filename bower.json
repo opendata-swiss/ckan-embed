@@ -1,0 +1,39 @@
+{
+  "name": "ckan-embed",
+  "main": "ckan-embed.js",
+  "homepage": "http://github.com/datalets/ckan-embed",
+  "description": "Embed information from CKAN data portals into other websites.",
+  "keywords": [
+    "ckan",
+    "portal",
+    "data",
+    "dataset",
+    "embed"
+  ],
+  "authors": [
+    "Oleg Lavrovsky (http://datalets.ch)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "ckan": "^0.2.3",
+    "lodash": "^3.7.0"
+  },
+  "ignore": [
+    ".DS_Store",
+    ".git",
+    ".gitignore",
+    ".npmignore",
+    ".jshintrc",
+    ".travis.yml",
+    "bin",
+    "coverage",
+    "examples",
+    "index.js",
+    "node_modules",
+    "output",
+    "scripts",
+    "src",
+    "test"
+  ]
+}
