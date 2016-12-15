@@ -6,7 +6,3 @@ coverage
 node_modules
 output
 temp
-ckan-embed.js
-ckan-embed.js.map
-ckan-embed.min.js
-ckan-embed-schema.json
