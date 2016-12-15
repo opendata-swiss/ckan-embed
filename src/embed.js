@@ -105,6 +105,8 @@ function datasets(el, url, query, callback) {
       .done(function(res) {
         packages = res.result.results;
         generateView(div, url, packages);
+
+        cb(null, {client: client, config: config, packages: packages});
       });
 
     } else {
@@ -113,12 +115,12 @@ function datasets(el, url, query, callback) {
         if (err != null) { cb(err); return; }
         packages = res.result.results;
         generateView(div, url, packages);
+
+        cb(null, {client: client, config: config, packages: packages});
       });
     }
 
-  cb(null, {client: client, config: config, packages: packages});
   } catch (err) { cb(err); }
-
 }
 
 // make config externally visible
