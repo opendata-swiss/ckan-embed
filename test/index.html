@@ -14,10 +14,6 @@
       .ckan-dataset {
         border-bottom: 1px solid #ccc;
         padding: 15px 0px;
-        margin-top: 5px;
-        background-position: right 5px;
-        background-size: auto 20px;
-        background-repeat: no-repeat;
       }
       .ckan-dataset h5 {
         font-weight: bold;
@@ -25,27 +21,53 @@
         color: #009688;
         margin: 10px 0 0;
       }
-      #opendata-swiss .ckan-dataset {
+      .ckan-embed {
+        margin-top: 5px;
+        background-position: right 5px;
+        background-size: auto 20px;
+        background-repeat: no-repeat;
+      }
+      .opendata-swiss {
         background-image: url('https://opendata.swiss/content/themes/wp-ogdch-theme/assets/images/logo_horizontal.svg');
       }
     </style>
   </head>
   <body>
-    <h1>CKAN Embed</h1>
+    <h1>CKAN Embed test page</h1>
+    <p>For more information visit the
+      <a href="https://github.com/Datalets/ckan-embed">GitHub page</a></p>
 
-    <div id="opendata-swiss"></div>
+    <hr>
 
-<script>
-var ex1;
+    <div class="opendata-swiss" id="example-1"></div>
 
-// Opendata.swiss
-ck.embed('#opendata-swiss', 'https://opendata.swiss/', 'RDF',
-  function(error, result) {
-    ex1 = result;
-    if (error) console.error(error);
-    if (result) console.info(result);
-  });
+    <script>
+    // Basic example using opendata.swiss portal with defaults
+    ck.embed('#example-1', 'https://opendata.swiss/', 'RDF');
+    </script>
 
-</script>
+    <hr>
+
+    <div class="opendata-swiss" id="example-2"></div>
+
+    <script>
+    // Basic example using opendata.swiss portal with defaults
+    ck.embed('#example-2', 'https://opendata.swiss/', {
+      action:   'organization_list',
+      jsonp:    true
+    });
+    </script>
+
+    // More advanced usage example
+
+    ,
+    var ex1;
+      function(error, result) {
+        ex1 = result;
+        if (error) console.error(error);
+        if (result) console.info(result);
+      });
+
+    </script>
   </body>
 </html>
