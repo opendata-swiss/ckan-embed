@@ -6,7 +6,7 @@ This module supports embedding information dynamically from CKAN data portals in
 
 After adding [jQuery](https://www.npmjs.com/package/jquery), [LoDash](https://www.npmjs.com/package/lodash) and [ckan](https://www.npmjs.com/package/ckan) scripts to the page:
 
-```
+```html
 <script src="https://raw.githubusercontent.com/Datalets/ckan-embed/master/dist/ckan-embed.min.js"></script>
 ...
 <div class="opendata-swiss" id="example-1"></div>
