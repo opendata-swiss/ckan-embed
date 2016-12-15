@@ -5,10 +5,7 @@ var lodash = require('lodash'),
 var config = {};
 
 /* Support function to publish data to page */
-function generateView(ckandata) {
-
-  var datasets = ckandata.result.results;
-  console.debug(datasets);
+function generateView(div, url, packages) {
 
   // Generate HTML of the widget
   var template = _.template(
@@ -35,8 +32,8 @@ function generateView(ckandata) {
     };
 
     // Pass the dataset results to the template
-    for (var i in datasets) {
-      var dso = datasets[i];
+    for (var i in packages) {
+      var dso = packages[i];
       var ds = {
         url:           url + 'en/dataset/' + dso.name,
         title:         getLangDefault(dso.display_name),
@@ -49,19 +46,23 @@ function generateView(ckandata) {
       fragments.push(template({ ds: ds }));
     }
 
+    if (fragments.length === 0) {
+      fragments = ['No results'];
+    }
+
     // Insert into the container on the page
     div.html(fragments.join(''));
 
   }
 
-// Embed a CKAN result in a web page.
+// Embed a CKAN dataset result in a web page.
 // el: DOM element in which to place component (DOM node or CSS selector)
 // url: Source portal (URL string)
 // query: Parameters for CKAN API (object) or search query (string)
 // callback: invoked with the loaded CKAN client
-function embed(el, url, query, callback) {
+function datasets(el, url, query, callback) {
   var cb = callback || function(){},
-      client, config, action;
+      client, config, packages, jsonp;
 
   try {
     // Parse CKAN query
@@ -73,13 +74,11 @@ function embed(el, url, query, callback) {
     if (_.isUndefined(config.sort)) {
       config.sort = 'metadata_modified desc';
     }
-    if (_.isUndefined(config.action)) {
-      action = 'package_search';
-    } else {
-      action = config.action;
-    }
     if (_.isUndefined(config.jsonp)) {
-      config.jsonp = true;
+      jsonp = true;
+    } else {
+      jsonp = config.jsonp;
+      delete config.jsonp;
     }
 
     // ensure container div has class
@@ -89,12 +88,10 @@ function embed(el, url, query, callback) {
 
     // create a client
     var client = new CKAN.Client(url);
+    var action = 'package_search';
 
     // extend ckan.js action routine with jsonp support
-    if (config.jsonp) {
-      if (action.indexOf('dataset_' === 0)) {
-        action = action.replace('dataset_', 'package_');
-      }
+    if (jsonp) {
       var options = {
         url: client.endpoint + '/3/action/' + action,
         data: config, dataType: "jsonp",
@@ -105,23 +102,26 @@ function embed(el, url, query, callback) {
       .fail(function(err) {
         if (err != null) { cb(err); return; }
       })
-      .done(generateView);
+      .done(function(res) {
+        packages = res.result.results;
+        generateView(div, url, packages);
+      });
 
     } else {
       // recommended default usage of ckan.js, e.g. through CORS or proxy
-      client.action(action, config, function(err, result) {
+      client.action(action, config, function(err, res) {
         if (err != null) { cb(err); return; }
-
-        generateView(result);
+        packages = res.result.results;
+        generateView(div, url, packages);
       });
     }
 
-  cb(null, {client: client, config: config});
+  cb(null, {client: client, config: config, packages: packages});
   } catch (err) { cb(err); }
 
 }
 
 // make config externally visible
-embed.config = config;
+datasets.config = config;
 
-module.exports = embed;
+module.exports = datasets;
