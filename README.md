@@ -2,7 +2,21 @@
 
 This module supports embedding information dynamically from CKAN data portals into other websites. Currently only dataset (package) search results are supported.
 
-For usage examples see `test/index.html`.
+## Basic usage
+
+After adding [jQuery](https://www.npmjs.com/package/jquery), [LoDash](https://www.npmjs.com/package/lodash) and [ckan](https://www.npmjs.com/package/ckan) scripts to the page:
+
+```
+<script src="https://raw.githubusercontent.com/Datalets/ckan-embed/master/dist/ckan-embed.min.js"></script>
+...
+<div class="opendata-swiss" id="example-1"></div>
+...
+<script>
+ck.datasets('#example-1', 'https://opendata.swiss/', 'RDF');
+</script>
+```
+
+For more usage examples see `test/index.html`.
 
 ## Developer notes
 
