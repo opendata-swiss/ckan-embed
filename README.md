@@ -30,6 +30,7 @@ The script may also be initialized with a configuration object, for example in t
 ck.datasets('#example-2', 'https://opendata.swiss/', {
 	fq:       'tags:hospitals',
 	rows:     3,
+	lang:     'de',
 	jsonp:    false,
 	proxy:    '/ckanproxy/'
 }
@@ -37,7 +38,9 @@ ck.datasets('#example-2', 'https://opendata.swiss/', {
 
 - `fq`: allows use of [filter queries](http://docs.ckan.org/en/latest/api/index.html?highlight=filter%20queries)
 - `rows`: limit the number of results shown
+- `lang`: default language for result links
 - `jsonp`: toggle the use of JSONP (see note below)
+- `proxy`: relative or absolute path to API proxy
 
 NOTE: if you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, we recommend that you *disable* JSONP with the `jsonp: false` option.
 

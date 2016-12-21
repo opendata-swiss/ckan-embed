@@ -5,7 +5,7 @@ var _ = require('underscore'),
 var config = {};
 
 /* Support function to publish data to page */
-function generateView(div, url, packages) {
+function generateView(div, url, packages, lang) {
 
   // Generate HTML of the widget
   var template_widget = _.template(
@@ -20,10 +20,10 @@ function generateView(div, url, packages) {
     '</div>'
   );
 
-
   // Helper functions to massage the results
   var fragments = [];
   var getLangDefault = function(n) {
+    if (lang !== null && n[lang]) return n[lang];
     return n.fr || n.de || n.it || n.en;
   };
   var getDatasetFormats = function(res) {
@@ -32,50 +32,56 @@ function generateView(div, url, packages) {
       .join(' ');
     };
 
-    // Pass the dataset results to the template
-    for (var i in packages) {
-      var dso = packages[i];
-      var ds = {
-        url:           url + 'en/dataset/' + dso.name,
-        title:         getLangDefault(dso.display_name),
-        groupname:     (dso.groups.length === 0) ? '' :
-        getLangDefault(dso.groups[0].display_name),
-        description:   getLangDefault(dso.description),
-        formats:       getDatasetFormats(dso.resources),
-        modified:      dso.metadata_modified
-      };
-      fragments.push(template_widget({ ds: ds }));
-    }
+  // adjust url for language support
+  if (lang !== null) url = url + lang + '/';
 
-    if (fragments.length === 0) {
-      fragments = ['No results'];
-    }
-
-    // Insert into the container on the page
-    div.html(fragments.join(''));
-
+  // Pass the dataset results to the template
+  for (var i in packages) {
+    var dso = packages[i];
+    var dsogroupname = (dso.groups.length === 0) ? '' :
+          getLangDefault(dso.groups[0].display_name);
+    var ds = {
+      url:           url + 'dataset/' + dso.name,
+      title:         getLangDefault(dso.display_name),
+      groupname:     dsogroupname,
+      description:   getLangDefault(dso.description),
+      formats:       getDatasetFormats(dso.resources),
+      modified:      dso.metadata_modified
+    };
+    fragments.push(template_widget({ ds: ds }));
   }
+
+  if (fragments.length === 0) {
+    fragments = ['No results'];
+  }
+
+  // Insert into the container on the page
+  div.html(fragments.join(''));
+
+}
 
 // Embed a CKAN dataset result in a web page.
 // el: DOM element in which to place component (DOM node or CSS selector)
 // url: Source portal (URL string)
-// query: Parameters for CKAN API (object) or search query (string)
+// options: Parameters for CKAN API (object) or search query (string)
 // callback: invoked with the loaded CKAN client
 function datasets(el, url, options, callback) {
   var cb = callback || function(){},
-      client, request, packages, jsonp;
+      request = {}, client, packages;
 
   try {
     // parse CKAN query
     if (_.isString(options)) {
       request.q = { q: options };
       options = {};
-    } else if (!_.isUndefined(options.q)) {
-      request.q = options.q;
-    } else if (!_.isUndefined(options.fq)) {
-      request.fq = options.fq;
     } else {
-      cb('Please provide a query');
+      if (!_.isUndefined(options.q)) {
+        request.q = options.q;
+      } else if (!_.isUndefined(options.fq)) {
+        request.fq = options.fq;
+      } else {
+        cb('Please provide a query'); return;
+      }
     }
     request.sort = _.isUndefined(options.sort) ?
       'metadata_modified desc' : options.sort;
@@ -87,6 +93,8 @@ function datasets(el, url, options, callback) {
       true : options.jsonp;
     options.proxy = _.isUndefined(options.proxy) ?
       null : options.proxy;
+    options.lang = _.isUndefined(options.lang) ?
+      'en' : options.lang;
 
     // ensure container div has class
     var div = $(el).addClass('ckan-embed');
@@ -96,10 +104,10 @@ function datasets(el, url, options, callback) {
     var action = 'package_search';
 
     // extend ckan.js action routine with jsonp support
-    if (jsonp) {
+    if (options.jsonp) {
       request = {
         url: client.endpoint + '/3/action/' + action,
-        data: config, dataType: "jsonp",
+        data: request, dataType: "jsonp",
         type: 'POST', cache: true
       };
 
@@ -109,26 +117,23 @@ function datasets(el, url, options, callback) {
       })
       .done(function(res) {
         packages = res.result.results;
-        generateView(div, url, packages);
+        generateView(div, url, packages, options.lang);
 
-        cb(null, {client: client, config: config, packages: packages});
+        cb(null, {client: client, request: request, packages: packages});
       });
 
     } else {
       // recommended default usage of ckan.js, e.g. through CORS or proxy
-      client.action(action, config, function(err, res) {
+      client.action(action, request, function(err, res) {
         if (err !== null) { cb(err); return; }
         packages = res.result.results;
-        generateView(div, url, packages);
+        generateView(div, url, packages, options.lang);
 
-        cb(null, {client: client, config: config, packages: packages});
+        cb(null, {client: client, request: request, packages: packages});
       });
     }
 
   } catch (err) { cb(err); }
 }
-
-// make config externally visible
-datasets.config = config;
 
 module.exports = datasets;
