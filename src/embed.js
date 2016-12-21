@@ -28,7 +28,7 @@ function generateView(div, url, packages) {
   };
   var getDatasetFormats = function(res) {
     return _.uniq(_.map(res,
-      function(r) { return r.format }))
+      function(r) { return r.format; }))
       .join(' ');
     };
 
@@ -38,7 +38,7 @@ function generateView(div, url, packages) {
       var ds = {
         url:           url + 'en/dataset/' + dso.name,
         title:         getLangDefault(dso.display_name),
-        groupname:     (dso.groups.length == 0) ? '' :
+        groupname:     (dso.groups.length === 0) ? '' :
         getLangDefault(dso.groups[0].display_name),
         description:   getLangDefault(dso.description),
         formats:       getDatasetFormats(dso.resources),
@@ -61,46 +61,50 @@ function generateView(div, url, packages) {
 // url: Source portal (URL string)
 // query: Parameters for CKAN API (object) or search query (string)
 // callback: invoked with the loaded CKAN client
-function datasets(el, url, query, callback) {
+function datasets(el, url, options, callback) {
   var cb = callback || function(){},
-      client, config, packages, jsonp;
+      client, request, packages, jsonp;
 
   try {
-    // Parse CKAN query
+    // parse CKAN query
     if (_.isString(query)) {
-      config = { q: query };
+      request.q = { q: query };
+    } else if (!_.isUndefined(options.q)) {
+      request.q = options.q;
+    } else if (!_.isUndefined(options.fq)) {
+      request.fq = options.fq;
     } else {
-      config = query;
+      cb('Please provide a query');
     }
-    if (_.isUndefined(config.sort)) {
-      config.sort = 'metadata_modified desc';
-    }
-    if (_.isUndefined(config.jsonp)) {
-      jsonp = true;
-    } else {
-      jsonp = config.jsonp;
-      delete config.jsonp;
-    }
+    request.sort = _.isUndefined(options.sort) ?
+      'metadata_modified desc' : options.sort;
+    request.rows = _.isUndefined(options.rows) ?
+      5 : options.rows;
+
+    // parse configuration options
+    options.jsonp = _.isUndefined(options.jsonp) ?
+      true : options.jsonp;
+    options.proxy = _.isUndefined(options.proxy) ?
+      null : options.proxy;
 
     // ensure container div has class
-    var div = $(el)
-      .addClass('ckan-embed');
+    var div = $(el).addClass('ckan-embed');
 
     // create a client
-    var client = new CKAN.Client(url);
+    client = new CKAN.Client(options.proxy || url);
     var action = 'package_search';
 
     // extend ckan.js action routine with jsonp support
     if (jsonp) {
-      var options = {
+      request = {
         url: client.endpoint + '/3/action/' + action,
         data: config, dataType: "jsonp",
         type: 'POST', cache: true
       };
 
-      $.ajax(options)
+      $.ajax(request)
       .fail(function(err) {
-        if (err != null) { cb(err); return; }
+        if (err !== null) { cb(err); return; }
       })
       .done(function(res) {
         packages = res.result.results;
@@ -112,7 +116,7 @@ function datasets(el, url, query, callback) {
     } else {
       // recommended default usage of ckan.js, e.g. through CORS or proxy
       client.action(action, config, function(err, res) {
-        if (err != null) { cb(err); return; }
+        if (err !== null) { cb(err); return; }
         packages = res.result.results;
         generateView(div, url, packages);
 

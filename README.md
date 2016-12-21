@@ -20,17 +20,18 @@ ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
 
-The widget will then render in the #example-1 container. Some styling possibilities, such as showing the logo of the portal, are explored in `test/style.css`.
+The widget will then render in the `#example-1` container. Some styling possibilities, such as showing the logo of the portal, are explored in `test/style.css`.
 
 ### Advanced options
 
-The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', using JSONP:
+The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', without using JSONP and instead proxying the requests through to the API at the `/ckanproxy/` path:
 
 ```js
 ck.datasets('#example-2', 'https://opendata.swiss/', {
 	fq:       'tags:hospitals',
 	rows:     3,
-	jsonp:    true
+	jsonp:    false,
+	proxy:    '/ckanproxy/'
 }
 ```
 
