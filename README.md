@@ -16,7 +16,7 @@ ck.datasets('#example-1', 'https://opendata.swiss/', 'RDF');
 </script>
 ```
 
-The script may also be initialised with a configuration object:
+With the second parameter a fully qualified URL to the target CKAN portal, and the third ("RDF") a free text search query. The script may also be initialized with a configuration object:
 
 ```js
 ck.datasets('#example-2', 'https://opendata.swiss/', {
