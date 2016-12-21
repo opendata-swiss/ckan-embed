@@ -6,11 +6,18 @@ This module supports embedding information dynamically from CKAN data portals in
 
 This script can be used with any recent [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets funciton. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
 
-After adding [jQuery](https://www.npmjs.com/package/jquery), [LoDash](https://www.npmjs.com/package/lodash) and [ckan](https://www.npmjs.com/package/ckan) scripts to the page:
+Add [jQuery](https://www.npmjs.com/package/jquery), [Underscore](https://www.npmjs.com/package/underscoe), [ckan](https://www.npmjs.com/package/ckan) and the *ckan-embed* scripts into the `<head>` (alternatively, use your own package manager):
 
 ```html
-<script src="https://raw.githubusercontent.com/opendata-swiss/ckan-embed/master/dist/ckan-embed.min.js"></script>
-...
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdn.rawgit.com/okfn/ckan.js/master/ckan.js"></script>
+<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/1.0.0/dist/ckan-embed.min.js"></script>
+```
+
+Place the container and init code somewhere in the page:
+
+```html
 <div id="example-1">
 	Loading '<a href="https://opendata.swiss">statistik</a>' datasets ...
 </div>
