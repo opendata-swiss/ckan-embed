@@ -19,7 +19,6 @@
   },
   "contributors": [],
   "license": "MIT",
-  "main": "src/embed.js",
   "devDependencies": {
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
@@ -33,21 +32,21 @@
     "watchify": "^3.7.0"
   },
   "scripts": {
-    "deploy": "npm run lint && npm run test && scripts/deploy.sh",
+    "deploy": "npm run lint && npm run test",
     "lint": "jshint src/",
     "test": "mocha --timeout 5000 --recursive test/",
     "build": "browserify src/embed.js -d -s ck.datasets > dist/ckan-embed.js",
     "postbuild": "uglifyjs dist/ckan-embed.js -cm > dist/ckan-embed.min.js",
     "watch": "watchify src/embed.js -v -d -s ck.datasets -o dist/ckan-embed.js"
   },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
+  "main": "src/embed.js",
   "browserify-shim": {
-    "jquery": "global:jquery",
-    "lodash": "global:lodash",
-    "ckan": "global:ckan"
+    "ckan": "global:CKAN"
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "dependencies": {
+    "browserify-shim": "~3.2.0"
   }
 }

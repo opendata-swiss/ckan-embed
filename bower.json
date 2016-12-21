@@ -1,7 +1,7 @@
 {
   "name": "ckan-embed",
   "main": "ckan-embed.js",
-  "homepage": "http://github.com/datalets/ckan-embed",
+  "homepage": "http://github.com/opendata-swiss/ckan-embed",
   "description": "Embed information from CKAN data portals into other websites.",
   "keywords": [
     "ckan",
@@ -16,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "^3.1.1",
-    "ckan": "^0.2.3",
     "lodash": "^3.7.0"
   },
   "ignore": [
