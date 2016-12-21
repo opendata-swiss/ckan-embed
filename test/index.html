@@ -3,34 +3,18 @@
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <title>CKAN Embed Test</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="../bower_components/lodash/lodash.min.js" charset="utf8"></script>
+
+    <!-- Load library dependencies -->
+    <script src="../bower_components/underscore/underscore-min.js" charset="utf8"></script>
     <script src="../bower_components/jquery/dist/jquery.min.js" charset="utf8"></script>
     <script src="../node_modules/ckan/ckan.js" charset="utf8"></script>
+
+    <!-- Load the widget script -->
     <script src="../dist/ckan-embed.js"></script>
-    <style>
-      body > div { margin-bottom: 2em; }
-      /* A bit of formatting for the embedded results */
-      .ckan-dataset {
-        border-bottom: 1px solid #ccc;
-        padding: 15px 0px;
-      }
-      .ckan-dataset h5 {
-        font-weight: bold;
-        font-size: 150%;
-        color: #009688;
-        margin: 10px 0 0;
-      }
-      .ckan-embed {
-        margin-top: 5px;
-        background-position: right 5px;
-        background-size: auto 20px;
-        background-repeat: no-repeat;
-      }
-      .opendata-swiss {
-        background-image: url('https://opendata.swiss/content/themes/wp-ogdch-theme/assets/images/logo_horizontal.svg');
-      }
-    </style>
+
+    <!-- Some example styles -->
+    <link rel="stylesheet" href="style.css">
+
   </head>
   <body>
     <h1>CKAN Embed test page</h1>
@@ -39,44 +23,20 @@
       <a href="http://handbook.opendata.swiss/en/library/embed.html">Handbook documentation</a> and
       <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
     </p>
+    <p>See also <a href="extra.html">Advanced tests</a>.</p>
 
-    <h2>Results for search query 'RDF'</h2>
+    <h2>Results for search query 'statistik'</h2>
     <hr>
 
-    <div class="opendata-swiss" id="example-1"></div>
+    <div class="opendata-swiss" id="example-1">
+      Loading
+      <a href="https://opendata.swiss/de/dataset?q=statistik">'statistik' datasets</a>
+      ...
+    </div>
 
     <script>
     // Basic example using opendata.swiss portal with defaults
-    ck.datasets('#example-1', 'https://opendata.swiss/', 'RDF');
-    </script>
-
-    <h2>Search datasets from the National Library, 3 results</h2>
-    <hr>
-
-    <div class="opendata-swiss" id="example-2"></div>
-
-    <script>
-    ck.datasets('#example-2', 'https://opendata.swiss/', {
-      fq:       'organization:schweizerische-nationalbibliothek-nb',
-      rows:     3
-    });
-    </script>
-
-    <h2>Search for tag 'hospitals', 3 results, JSONP enabled, with logging</h2>
-    <hr>
-
-    <div class="opendata-swiss" id="example-3"></div>
-
-    <script>
-    ck.datasets('#example-3', 'https://opendata.swiss/', {
-      fq:       'tags:hospitals',
-      rows:     3,
-      jsonp:    true
-    }, function(error, result) {
-      console.log(result);
-      if (error) console.error(error);
-      if (result) console.info(result);
-    });
+    ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
     </script>
   </body>
 </html>

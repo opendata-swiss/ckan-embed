@@ -1,4 +1,28 @@
 /*
+  Sample formatting for the embedded widget results
+*/
+
+.ckan-dataset {
+  border-bottom: 1px solid #ccc;
+  padding: 15px 0px;
+}
+.ckan-dataset h5 {
+  font-weight: bold;
+  font-size: 150%;
+  color: #009688;
+  margin: 10px 0 0;
+}
+.ckan-embed {
+  margin-top: 5px;
+  background-position: right 5px;
+  background-size: auto 20px;
+  background-repeat: no-repeat;
+}
+.opendata-swiss {
+  background-image: url('https://opendata.swiss/content/themes/wp-ogdch-theme/assets/images/logo_horizontal.svg');
+}
+
+/*
  Test document styles
 */
 
@@ -11,6 +35,8 @@ body {
   font-size: 16px;
   line-height: 1.6;
 }
+
+body > div { margin-bottom: 2em; }
 
 a, a:visited {
   color: #4078c0;

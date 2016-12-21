@@ -2,21 +2,29 @@
 
 This module supports embedding information dynamically from CKAN data portals into other websites. Currently only dataset (package) search results are supported. For background on this project visit the [Swiss OGD Handbook](http://handbook.opendata.swiss/en/library/embed.html).
 
-## Basic usage
+## Usage notes
+
+This script can be used with any recent [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets funciton. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
 
 After adding [jQuery](https://www.npmjs.com/package/jquery), [LoDash](https://www.npmjs.com/package/lodash) and [ckan](https://www.npmjs.com/package/ckan) scripts to the page:
 
 ```html
 <script src="https://raw.githubusercontent.com/opendata-swiss/ckan-embed/master/dist/ckan-embed.min.js"></script>
 ...
-<div class="opendata-swiss" id="example-1"></div>
+<div id="example-1">
+	Loading '<a href="https://opendata.swiss">statistik</a>' datasets ...
+</div>
 ...
 <script>
-ck.datasets('#example-1', 'https://opendata.swiss/', 'RDF');
+ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
 
-With the second parameter a fully qualified URL to the target CKAN portal, and the third ("RDF") a free text search query. The script may also be initialized with a configuration object:
+The widget will then render in the #example-1 container. Some styling possibilities, such as showing the logo of the portal, are explored in `test/style.css`.
+
+### Advanced options
+
+The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', using JSONP:
 
 ```js
 ck.datasets('#example-2', 'https://opendata.swiss/', {
@@ -30,7 +38,7 @@ ck.datasets('#example-2', 'https://opendata.swiss/', {
 - `rows`: limit the number of results shown
 - `jsonp`: toggle the use of JSONP (see note below)
 
-If you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, we recommend that you *disable* JSONP with the `jsonp: false` option.
+NOTE: if you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, we recommend that you *disable* JSONP with the `jsonp: false` option.
 
 For more usage examples see `test/index.html`.
 
@@ -51,6 +59,6 @@ To build `ckan-embed.js` and view the test examples, you must have [npm](https:/
 
 ## Acknowledgments
 
-This project was inspired by and initially based on [vega-embed](https://github.com/vega/vega-embed).
-
 Developed with support from the [Swiss Federal Archives](https://www.bar.admin.ch).
+
+This project was initially based on [vega-embed](https://github.com/vega/vega-embed).

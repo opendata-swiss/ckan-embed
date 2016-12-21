@@ -1,6 +1,6 @@
-var lodash = require('lodash'),
-    jquery = require('jquery'),
-    ckan = require('ckan');
+var _ = require('underscore'),
+    $ = require('jquery'),
+    CKAN = require('ckan');
 
 var config = {};
 
@@ -8,7 +8,7 @@ var config = {};
 function generateView(div, url, packages) {
 
   // Generate HTML of the widget
-  var template = _.template(
+  var template_widget = _.template(
     '<div class="ckan-dataset">' +
     '<a href="<%= ds.url %>">' +
     '<h5><%= ds.title %></h5>' +
@@ -19,6 +19,7 @@ function generateView(div, url, packages) {
     //'<small><%= ds.modified %></small>' +
     '</div>'
   );
+
 
   // Helper functions to massage the results
   var fragments = [];
@@ -43,7 +44,7 @@ function generateView(div, url, packages) {
         formats:       getDatasetFormats(dso.resources),
         modified:      dso.metadata_modified
       };
-      fragments.push(template({ ds: ds }));
+      fragments.push(template_widget({ ds: ds }));
     }
 
     if (fragments.length === 0) {
@@ -83,8 +84,7 @@ function datasets(el, url, query, callback) {
 
     // ensure container div has class
     var div = $(el)
-      .addClass('ckan-embed')
-      .html(''); // clear container
+      .addClass('ckan-embed');
 
     // create a client
     var client = new CKAN.Client(url);
