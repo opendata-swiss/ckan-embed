@@ -1,13 +1,13 @@
 # ckan-embed
 
-This module supports embedding information dynamically from CKAN data portals into other websites. Currently only dataset (package) search results are supported.
+This module supports embedding information dynamically from CKAN data portals into other websites. Currently only dataset (package) search results are supported. For background on this project visit the [Swiss OGD Handbook](http://handbook.opendata.swiss/en/library/embed.html).
 
 ## Basic usage
 
 After adding [jQuery](https://www.npmjs.com/package/jquery), [LoDash](https://www.npmjs.com/package/lodash) and [ckan](https://www.npmjs.com/package/ckan) scripts to the page:
 
 ```html
-<script src="https://raw.githubusercontent.com/Datalets/ckan-embed/master/dist/ckan-embed.min.js"></script>
+<script src="https://raw.githubusercontent.com/opendata-swiss/ckan-embed/master/dist/ckan-embed.min.js"></script>
 ...
 <div class="opendata-swiss" id="example-1"></div>
 ...
@@ -15,6 +15,22 @@ After adding [jQuery](https://www.npmjs.com/package/jquery), [LoDash](https://ww
 ck.datasets('#example-1', 'https://opendata.swiss/', 'RDF');
 </script>
 ```
+
+The script may also be initialised with a configuration object:
+
+```js
+ck.datasets('#example-2', 'https://opendata.swiss/', {
+	fq:       'tags:hospitals',
+	rows:     3,
+	jsonp:    true
+}
+```
+
+- `fq`: allows use of [filter queries](http://docs.ckan.org/en/latest/api/index.html?highlight=filter%20queries)
+- `rows`: limit the number of results shown
+- `jsonp`: toggle the use of JSONP (see note below)
+
+If you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, we recommend that you *disable* JSONP with the `jsonp: false` option.
 
 For more usage examples see `test/index.html`.
 

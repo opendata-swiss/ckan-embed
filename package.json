@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/datalets/ckan-embed.git"
+    "url": "http://github.com/opendata-swiss/ckan-embed.git"
   },
   "author": {
     "name": "Oleg Lavrovsky",
