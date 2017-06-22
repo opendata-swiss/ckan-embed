@@ -4,18 +4,25 @@ This module supports embedding information dynamically from CKAN data portals in
 
 ## Usage notes
 
-This script can be used with any recent [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets funciton. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
+This script can be used with any recent [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets function. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
 
-Add [jQuery](https://www.npmjs.com/package/jquery), [Underscore](https://www.npmjs.com/package/underscore), [ckan](https://www.npmjs.com/package/ckan) and the *ckan-embed* scripts into the `<head>` (alternatively, use your own package manager):
+Project dependencies include [jQuery](https://www.npmjs.com/package/jquery) (3.1+), [Underscore](https://www.npmjs.com/package/underscore) (1.8+), [ckan](https://www.npmjs.com/package/ckan) (0.2+).
+
+Add the *ckan-embed* script into the `<head>` of the page:
+
+```html
+<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/1.0.0/dist/ckan-embed.min.js"></script>
+```
+
+And above it, any other scripts you require:
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="https://cdn.rawgit.com/okfn/ckan.js/master/ckan.js"></script>
-<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/1.0.0/dist/ckan-embed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckan/0.2.3/ckan.min.js"></script>
 ```
 
-Place the container and init code somewhere in the page:
+Place the container somewhere on the page, and add the init code:
 
 ```html
 <div id="example-1">
@@ -31,7 +38,7 @@ The widget will then render in the `#example-1` container. Some styling possibil
 
 ### Advanced options
 
-The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', without using JSONP and instead proxying the requests through to the API at the `/ckanproxy/` path:
+The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', without using JSONP* and instead proxying the requests through to the API at the `/ckanproxy/` path:
 
 ```js
 ck.datasets('#example-2', 'https://opendata.swiss/', {
@@ -49,7 +56,7 @@ ck.datasets('#example-2', 'https://opendata.swiss/', {
 - `jsonp`: toggle the use of JSONP (see note below)
 - `proxy`: relative or absolute path to API proxy
 
-NOTE: if you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, we recommend that you *disable* JSONP with the `jsonp: false` option.
+NOTE: if you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, it is recommended that you *disable* JSONP with the `jsonp: false` option. We have made it to be enabled by default since most CKAN servers we use can still only be reached through this method.
 
 For more usage examples see `test/index.html`.
 
