@@ -17,7 +17,7 @@ Add the *ckan-embed* script into the `<head>` of the page:
 And above it, any other scripts you require:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckan/0.2.3/ckan.min.js"></script>
 ```
