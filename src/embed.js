@@ -72,7 +72,7 @@ function datasets(el, url, options, callback) {
   try {
     // parse CKAN query
     if (_.isString(options)) {
-      request.q = { q: options };
+      request.q = options;
       options = {};
     } else {
       if (!_.isUndefined(options.q)) {
