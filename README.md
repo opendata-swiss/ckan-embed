@@ -11,7 +11,7 @@ Project dependencies include [jQuery](https://www.npmjs.com/package/jquery) (3.1
 Add the *ckan-embed* script into the `<head>` of the page:
 
 ```html
-<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/1.0.0/dist/ckan-embed.min.js"></script>
+<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/1.0.1/dist/ckan-embed.min.js"></script>
 ```
 
 And above it, any other scripts you require:
