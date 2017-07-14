@@ -142,4 +142,6 @@ function datasets(el, url, options, callback) {
   } catch (err) { cb(err); }
 }
 
-module.exports = datasets;
+exports.datasets = datasets;
+exports.template = template;
+exports.generateView = generateView;
