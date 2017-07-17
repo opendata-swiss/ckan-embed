@@ -35,9 +35,9 @@
     "deploy": "npm run lint && npm run test",
     "lint": "jshint src/",
     "test": "mocha --timeout 5000 --recursive test/",
-    "build": "browserify src/embed.js -d -s ck.datasets > dist/ckan-embed.js",
+    "build": "browserify src/embed.js -d -s ck > dist/ckan-embed.js",
     "postbuild": "uglifyjs dist/ckan-embed.js -cm > dist/ckan-embed.min.js",
-    "watch": "watchify src/embed.js -v -d -s ck.datasets -o dist/ckan-embed.js"
+    "watch": "watchify src/embed.js -v -d -s ck -o dist/ckan-embed.js"
   },
   "main": "src/embed.js",
   "browserify-shim": {
