@@ -8,17 +8,7 @@ var config = {};
 function generateView(div, url, packages, lang) {
 
   // Generate HTML of the widget
-  var template_widget = _.template(
-    '<div class="ckan-dataset">' +
-    '<a href="<%= ds.url %>">' +
-    '<h5><%= ds.title %></h5>' +
-    '</a>' +
-    '<p><%= ds.description %></p>' +
-    '<b><%= ds.groupname %></b><br>' +
-    '<small><%= ds.formats %></small>' +
-    //'<small><%= ds.modified %></small>' +
-    '</div>'
-  );
+  var template_widget = template();
 
   // Helper functions to massage the results
   var fragments = [];
@@ -48,7 +38,7 @@ function generateView(div, url, packages, lang) {
       formats:       getDatasetFormats(dso.resources),
       modified:      dso.metadata_modified
     };
-    fragments.push(template_widget({ ds: ds }));
+    fragments.push(template_widget({ ds: ds, dso: dso }));
   }
 
   if (fragments.length === 0) {
@@ -58,6 +48,22 @@ function generateView(div, url, packages, lang) {
   // Insert into the container on the page
   div.html(fragments.join(''));
 
+}
+
+function template() {
+  // Generate HTML of the widget
+  var template_widget = _.template(
+    '<div class="ckan-dataset">' +
+    '<a href="<%= ds.url %>">' +
+    '<h5><%= ds.title %></h5>' +
+    '</a>' +
+    '<p><%= ds.description %></p>' +
+    '<b><%= ds.groupname %></b><br>' +
+    '<small><%= ds.formats %></small>' +
+    //'<small><%= ds.modified %></small>' +
+    '</div>'
+  );
+  return template_widget;
 }
 
 // Embed a CKAN dataset result in a web page.
@@ -136,4 +142,6 @@ function datasets(el, url, options, callback) {
   } catch (err) { cb(err); }
 }
 
-module.exports = datasets;
+exports.datasets = datasets;
+exports.template = template;
+exports.generateView = generateView;
