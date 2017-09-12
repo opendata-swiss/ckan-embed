@@ -1,6 +1,6 @@
 {
   "name": "ckan-embed",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Embed information from CKAN data portals into other websites.",
   "keywords": [
     "ckan",
@@ -24,7 +24,7 @@
     "browserify-shim": "^3.8.12",
     "chai": "^3.5.0",
     "ckan": "^0.2.3",
-    "jquery": "^3.1.1",
+    "jquery": "^3.2.1",
     "jshint": "^2.9.1",
     "mocha": "^2.4.5",
     "uglify-js": "^2.6.2",

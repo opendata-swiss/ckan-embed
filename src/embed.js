@@ -5,12 +5,13 @@ var _ = require('underscore'),
 var config = {};
 
 /* Support function to publish data to page */
-function generateView(div, url, packages, lang) {
+function generateView(div, url, packages, options) {
 
   // Generate HTML of the widget
-  var template_widget = template();
+  var template_widget = options.template;
 
   // Helper functions to massage the results
+  var lang = options.lang;
   var fragments = [];
   var getLangDefault = function(n) {
     if (lang !== null && n[lang]) return n[lang];
@@ -50,7 +51,15 @@ function generateView(div, url, packages, lang) {
 
 }
 
-function template() {
+// Adapted from epeli/underscore.string
+function truncate(str, length, truncateStr) {
+  str = (str == null) ? '' : '' + str;
+  truncateStr = truncateStr || '...';
+  length = ~~length;
+  return str.length > length ? str.slice(0, length) + truncateStr : str;
+};
+
+function defaultTemplate() {
   // Generate HTML of the widget
   var template_widget = _.template(
     '<div class="ckan-dataset">' +
@@ -101,6 +110,8 @@ function datasets(el, url, options, callback) {
       null : options.proxy;
     options.lang = _.isUndefined(options.lang) ?
       'en' : options.lang;
+    options.template = _.isUndefined(options.template) ?
+      defaultTemplate() : options.template;
 
     // ensure container div has class
     var div = $(el).addClass('ckan-embed');
@@ -123,7 +134,7 @@ function datasets(el, url, options, callback) {
       })
       .done(function(res) {
         packages = res.result.results;
-        generateView(div, url, packages, options.lang);
+        generateView(div, url, packages, options);
 
         cb(null, {client: client, request: request, packages: packages});
       });
@@ -133,7 +144,7 @@ function datasets(el, url, options, callback) {
       client.action(action, request, function(err, res) {
         if (err !== null) { cb(err); return; }
         packages = res.result.results;
-        generateView(div, url, packages, options.lang);
+        generateView(div, url, packages, options);
 
         cb(null, {client: client, request: request, packages: packages});
       });
@@ -143,5 +154,6 @@ function datasets(el, url, options, callback) {
 }
 
 exports.datasets = datasets;
-exports.template = template;
+exports.template = defaultTemplate;
+exports.truncate = truncate;
 exports.generateView = generateView;
