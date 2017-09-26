@@ -52,11 +52,16 @@ ck.datasets('#example-2', 'https://opendata.swiss/', {
 
 - `fq`: allows use of [filter queries](http://docs.ckan.org/en/latest/api/index.html?highlight=filter%20queries)
 - `rows`: limit the number of results shown
+- `sort`: custom sorting order (see note below)
 - `lang`: default language for result links
 - `jsonp`: toggle the use of JSONP (see note below)
 - `proxy`: relative or absolute path to API proxy
 
-NOTE: if you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, it is recommended that you *disable* JSONP with the `jsonp: false` option. We have made it to be enabled by default since most CKAN servers we use can still only be reached through this method.
+## Usage notes
+
+If you are running this script on the same server or using a backend proxy (supported in all web servers) to the CKAN API, it is recommended that you *disable* **JSONP** with the `jsonp: false` option. We have made it to be enabled by default since many CKAN servers can still only be reached through this method.
+
+The default sorting order is `name asc` (alphabetical name ascending). Besides `name`, `package_count` and `title` are allowed. On multilingual CKAN servers add language suffix e.g. `title_string_en`. For specifying ascending or descending order append `asc` or `desc`.
 
 For more usage examples see `test/index.html`.
 
