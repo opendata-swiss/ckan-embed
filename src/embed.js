@@ -101,8 +101,8 @@ function parametrize(options) {
     'en' : options.lang;
   options.template = _.isUndefined(options.template) ?
     defaultTemplate() : options.template;
-  options.noresults = _.isUndefined(options.noresults) ?
-    'No datasets found' : options.noresults;
+  options.noresult = _.isUndefined(options.noresult) ?
+    'No datasets found' : options.noresult;
 
   return { 'request': request, 'options': options };
 }
@@ -145,7 +145,7 @@ function datasets(el, url, options, callback) {
         packages = res.result.results;
         var res = generateView(url, packages, options);
         // Insert into container on page
-        div.html(res ? res : options.noresults);
+        div.html(res ? res : options.noresult);
         // Continue with callback
         cb(null, {client: client, request: request, packages: packages});
       });
@@ -157,7 +157,7 @@ function datasets(el, url, options, callback) {
         packages = res.result.results;
         var res = generateView(url, packages, options);
         // Insert into container on page
-        div.html(res ? res : options.noresults);
+        div.html(res ? res : options.noresult);
         // Continue with callback
         cb(null, {client: client, request: request, packages: packages});
       });

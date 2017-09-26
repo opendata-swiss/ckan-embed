@@ -34,6 +34,7 @@
     ck.datasets('#example-2', 'https://opendata.swiss/', {
       fq:       'organization:schweizerische-nationalbibliothek-nb',
       rows:     3,
+      noresult: 'Sorry, nothing found',
       template: _.template(
         '<div class="ckan-dataset">' +
         '<a href="<%= ds.url %>">' +
