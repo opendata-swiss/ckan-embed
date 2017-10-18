@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>CKAN Embed Test</title>
+
+    <!-- Load library dependencies -->
+    <script src="../bower_components/underscore/underscore-min.js" charset="utf8"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/ckan.js" charset="utf8"></script>
+
+    <!-- Load the widget script -->
+    <script src="../dist/ckan-embed.js"></script>
+
+    <!-- Some example styles -->
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+    <h1>CKAN Embed category test</h1>
+    <p>
+      For more information visit the
+      <a href="http://handbook.opendata.swiss/en/library/embed.html">Handbook documentation</a> and
+      <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
+    </p>
+    <p>&lt; Back to <a href="index.html">basic tests</a>.</p>
+
+    <h2>Search datasets with selection of (static, TODO: dynamic) category.</h2>
+    <hr>
+
+    <ul id="groupSelector" class="nav nav-pills nav-stacked">
+      <li class="nav-item break-word active">
+        <a href="#" data-group="geography">
+          Geography
+        </a>
+      </li>
+      <li class="nav-item break-word">
+        <a href="#" data-group="politics">
+          Politics
+        </a>
+      </li>
+      <li class="nav-item break-word">
+        <a href="#" data-group="finances">
+          Finances
+        </a>
+      </li>
+      <li class="nav-item break-word">
+        <a href="#" data-group="social-security">
+          Social security
+        </a>
+      </li>
+      <li class="nav-item break-word">
+        <a href="#" data-group="population">
+          Population
+        </a>
+      </li>
+  </ul>
+
+    <div class="opendata-swiss" id="example-2"></div>
+
+    <script>
+    function embedGroup(group) {
+      ck.datasets('#example-2', 'https://opendata.swiss/de/', {
+        fq:       'organization:kanton-thurgau groups:' + group,
+        rows:     20,
+        sort:     'title_string_de asc',
+        noresult: 'Sorry, nothing found',
+        template: _.template(
+          '<div class="ckan-dataset">' +
+          '<a href="<%= ds.url %>">' +
+          '<h4><%= ds.title %></h4>' +
+          '</a>' +
+          '<p><%= ck.truncate(ds.description, 250) %></p>' +
+          '<em>Formats:</em> <small><%= ds.formats.toUpperCase() %></small>' +
+          //'<small><%= ds.modified %></small>' +
+          '</div>'
+        )
+      });
+    }
+
+    // Default category
+    embedGroup('geography');
+
+    // Selector
+    $('#groupSelector a').click(function(e) {
+      e.preventDefault(); e.stopPropagation();
+      embedGroup($(this).attr('data-group'));
+      $(this).parents('ul').find('li').removeClass('active');
+      $(this).parents('li').addClass('active');
+    });
+    </script>
+    <style>
+      #groupSelector li { font-weight: normal; list-style-type: circle; }
+      #groupSelector li.active { font-weight: bold; list-style-type: disc; }
+    </style>
+  </body>
+</html>
