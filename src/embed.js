@@ -14,7 +14,7 @@ function generateView(div, url, packages, lang) {
   var fragments = [];
   var getLangDefault = function(n) {
     if (lang !== null && n[lang]) return n[lang];
-    return n.fr || n.de || n.it || n.en;
+    return n.fr || n.de || n.it || n.en || n;
   };
   var getDatasetFormats = function(res) {
     return _.uniq(_.map(res,
@@ -100,7 +100,7 @@ function datasets(el, url, options, callback) {
     options.proxy = _.isUndefined(options.proxy) ?
       null : options.proxy;
     options.lang = _.isUndefined(options.lang) ?
-      'en' : options.lang;
+      null : options.lang;
 
     // ensure container div has class
     var div = $(el).addClass('ckan-embed');
