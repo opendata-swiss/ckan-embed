@@ -39,7 +39,7 @@ function generateView(url, packages, options) {
   var fragments = [];
   var getLangDefault = function(n) {
     if (lang !== null && n[lang]) return n[lang];
-    return n.fr || n.de || n.it || n.en;
+    return n.fr || n.de || n.it || n.en || n;
   };
   var getDatasetFormats = function(res) {
     return _.uniq(_.map(res,
@@ -98,7 +98,7 @@ function parametrize(options) {
   options.proxy = _.isUndefined(options.proxy) ?
     null : options.proxy;
   options.lang = _.isUndefined(options.lang) ?
-    'en' : options.lang;
+    null : options.lang;
   options.template = _.isUndefined(options.template) ?
     defaultTemplate() : options.template;
   options.noresult = _.isUndefined(options.noresult) ?
@@ -137,6 +137,7 @@ function datasets(el, url, options, callback) {
         data: request, dataType: "jsonp",
         type: 'POST', cache: true
       };
+
       $.ajax(request)
       .fail(function(err) {
         if (err !== null) { cb(err); return; }
