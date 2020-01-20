@@ -8,21 +8,17 @@ This script can be used with any recent [CKAN](http://ckan.org) portal. It expos
 
 Project dependencies include [jQuery](https://www.npmjs.com/package/jquery) (3.1+), [Underscore](https://www.npmjs.com/package/underscore) (1.8+), [ckan](https://www.npmjs.com/package/ckan) (0.2+).
 
-Add the *ckan-embed* script into the `<head>` of the page:
+# Installation
+
+(1) Add the *ckan-embed* script into the `<head>` of the page:
 
 ```html
-<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/1.0.1/dist/ckan-embed.min.js"></script>
+<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/latest/dist/ckan-embed.min.js"></script>
 ```
 
-And above it, any other scripts you require:
+This will include non-blocking versions of dependency scripts.
 
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ckan/0.2.3/ckan.min.js"></script>
-```
-
-Place the container somewhere on the page, and add the init code:
+(2) Now place the container somewhere on the page, and add the init code:
 
 ```html
 <div id="example-1">
@@ -73,13 +69,12 @@ A web server like [NGINX can be used](https://www.nginx.com/resources/admin-guid
 
 ## Build Process
 
-To build `ckan-embed.js` and view the test examples, you must have [npm](https://www.npmjs.com/) installed.
+To build `ckan-embed.js` and view the test examples, you must have [yarn](https://yarnpkg.com/) installed.
 
-1. Run `npm install` in the ckan-embed folder to install dependencies.
-2. Run `npm run build` (this will invoke [browserify](http://browserify.org/) to bundle the source files, and then [uglify-js](http://lisperator.net/uglifyjs/) to create the minified version).
-3. Run `bower install` to fetch local versions of JavaScript libraries for the test instance.
-4. Run `npm run deploy` to do tests and update the distributables.
-5. Start a local webserver (e.g., `python -m SimpleHTTPServer 8000`) in the root folder and then point your web browser at the test directory (e.g., `http://localhost:8000/test/`).
+1. Run `yarn` in the ckan-embed folder to install dependencies.
+2. Run `yarn run build` (this will invoke [browserify](http://browserify.org/) to bundle the source files, and then [uglify-js](http://lisperator.net/uglifyjs/) to create the minified version).
+4. Run `yarn run deploy` to do tests and update the distributables.
+5. Start a local webserver (e.g., `python3 -m http.server 8000`) in the root folder and then point your web browser at the test directory (e.g., `http://localhost:8000/test/`).
 
 ## Acknowledgments
 

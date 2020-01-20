@@ -1,6 +1,6 @@
 {
   "name": "ckan-embed",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Embed information from CKAN data portals into other websites.",
   "keywords": [
     "ckan",
@@ -23,7 +23,6 @@
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "chai": "^3.5.0",
-    "ckan": "^0.2.3",
     "jquery": "^3.2.1",
     "jshint": "^2.9.1",
     "mocha": "^2.4.5",
@@ -41,7 +40,7 @@
   },
   "main": "src/embed.js",
   "browserify-shim": {
-    "jquery":     "$",
+    "jquery": "$",
     "underscore": "_",
     "ckan": "global:CKAN"
   },
@@ -51,6 +50,11 @@
     ]
   },
   "dependencies": {
-    "browserify-shim": "~3.2.0"
+    "ckan": "^0.2.3",
+    "jquery": "^3.2.1",
+    "underscore": "^1.8.3"
+  },
+  "engines": {
+    "yarn": ">= 1.0.0"
   }
 }

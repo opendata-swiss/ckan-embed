@@ -87,8 +87,10 @@ function parametrize(options) {
       return null;
     }
   }
+  // Default sort order is by descending modified date
   request.sort = _.isUndefined(options.sort) ?
     'metadata_modified desc' : options.sort;
+  // Fetches 5 rows by default
   request.rows = _.isUndefined(options.rows) ?
     5 : options.rows;
 
