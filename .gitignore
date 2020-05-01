@@ -1,4 +1,5 @@
 dist/ckan-embed.js
+dist/ckan-embed.bundle*
 .DS_Store
 .idea
 _site

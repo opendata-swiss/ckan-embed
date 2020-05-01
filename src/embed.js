@@ -30,7 +30,7 @@ function truncate(str, length, truncateStr) {
   truncateStr = truncateStr || '...';
   length = ~~length;
   return str.length > length ? str.slice(0, length) + truncateStr : str;
-};
+}
 
 /* Support function to publish data to page */
 function generateView(url, packages, options) {
@@ -73,7 +73,7 @@ function generateView(url, packages, options) {
   if (fragments.length === 0) return null;
   return fragments.join('');
 
-}; // -generateView
+} // -generateView
 
 // Parse query into a CKAN request
 function parametrize(options) {
@@ -111,7 +111,7 @@ function parametrize(options) {
     'No datasets found' : options.noresult;
 
   return { 'request': request, 'options': options };
-};
+}
 
 // Embed a CKAN dataset result in a web page.
 // el: DOM element in which to place component (DOM node or CSS selector)
@@ -135,7 +135,7 @@ embed.datasets = function (el, url, options, callback) {
     var client = new CKAN.Client(options.proxy || url);
     var action = 'package_search';
 
-    // extend ckan.js action routine with jsonp support
+    // extend ckan.js action routine with jsonp support - requires jQuery to be available
     if (options.jsonp) {
       request = {
         url: client.endpoint + '/3/action/' + action,
