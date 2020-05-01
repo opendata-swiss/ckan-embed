@@ -38,7 +38,7 @@
     "watch": "watchify src/embed.js -v -d -s CKANembed -o dist/ckan-embed.js",
     "build": "browserify src/embed.js -d -s CKANembed > dist/ckan-embed.js",
     "postbuild": "uglifyjs dist/ckan-embed.js -cm > dist/ckan-embed.min.js",
-    "dev": "webpack --mode development",
+    "dev": "webpack --mode development && python -m http.server",
     "webpack": "webpack --mode production"
   },
   "main": "src/embed.js",
