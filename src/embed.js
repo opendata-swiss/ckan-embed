@@ -1,8 +1,12 @@
+var CKANembed = {};
+
 var _ = require('underscore'),
     $ = require('jquery'),
     CKAN = require('ckan');
 
-var config = {};
+module.exports = CKANembed;
+
+(function(embed) {
 
 // Default HTML format of the widget
 function defaultTemplate() {
@@ -47,8 +51,13 @@ function generateView(url, packages, options) {
       .join(' ');
     };
 
+  function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  }
+
   // adjust url for language support
-  if (lang !== null) url = url + lang + '/';
+  if (lang !== null && !endsWith(url, lang + '/'))
+    url = url + lang + '/';
 
   // Pass the dataset results to the template
   for (var i in packages) {
@@ -87,8 +96,10 @@ function parametrize(options) {
       return null;
     }
   }
+  // Default sort order is by descending modified date
   request.sort = _.isUndefined(options.sort) ?
     'metadata_modified desc' : options.sort;
+  // Fetches 5 rows by default
   request.rows = _.isUndefined(options.rows) ?
     5 : options.rows;
 
@@ -100,7 +111,7 @@ function parametrize(options) {
   options.lang = _.isUndefined(options.lang) ?
     null : options.lang;
   options.template = _.isUndefined(options.template) ?
-    defaultTemplate() : options.template;
+    defaultTemplate() : _.template(options.template);
   options.noresult = _.isUndefined(options.noresult) ?
     'No datasets found' : options.noresult;
 
@@ -112,25 +123,24 @@ function parametrize(options) {
 // url: Source portal (URL string)
 // options: Parameters for CKAN API (object) or search query (string)
 // callback: invoked with the loaded CKAN client
-function datasets(el, url, options, callback) {
-  var cb = callback || function(){},
-      client, packages;
+embed.datasets = function (el, url, options, callback) {
+  var cb = callback || function(){};
 
   try {
     var p = parametrize(options);
     if (p === null)
       return cb('Please provide a query');
-    request = p['request'];
-    options = p['options'];
+    request = p.request;
+    options = p.options;
 
     // ensure container div has class
     var div = $(el).addClass('ckan-embed');
 
     // create a client
-    client = new CKAN.Client(options.proxy || url);
+    var client = new CKAN.Client(options.proxy || url);
     var action = 'package_search';
 
-    // extend ckan.js action routine with jsonp support
+    // extend ckan.js action routine with jsonp support - requires jQuery to be available
     if (options.jsonp) {
       request = {
         url: client.endpoint + '/3/action/' + action,
@@ -143,10 +153,10 @@ function datasets(el, url, options, callback) {
         if (err !== null) { cb(err); return; }
       })
       .done(function(res) {
-        packages = res.result.results;
-        var res = generateView(url, packages, options);
+        var packages = res.result.results;
+        var res2 = generateView(url, packages, options);
         // Insert into container on page
-        div.html(res ? res : options.noresult);
+        div.html(res2 ? res2 : options.noresult);
         // Continue with callback
         cb(null, {client: client, request: request, packages: packages});
       });
@@ -155,20 +165,22 @@ function datasets(el, url, options, callback) {
       // recommended default usage of ckan.js, e.g. through CORS or proxy
       client.action(action, request, function(err, res) {
         if (err !== null) { cb(err); return; }
-        packages = res.result.results;
-        var res = generateView(url, packages, options);
+        var packages = res.result.results;
+        var res2 = generateView(url, packages, options);
         // Insert into container on page
-        div.html(res ? res : options.noresult);
+        div.html(res2 ? res2 : options.noresult);
         // Continue with callback
         cb(null, {client: client, request: request, packages: packages});
       });
     }
 
   } catch (err) { cb(err); }
-} //-datasets
+}; //-datasets
 
-exports.datasets = datasets;
-exports.template = defaultTemplate;
-exports.truncate = truncate;
-exports.parametrize = parametrize;
-exports.generateView = generateView;
+// Export utilities, for testing:
+
+embed.truncate = truncate;
+embed.parametrize = parametrize;
+embed.generateView = generateView;
+
+}(CKANembed));

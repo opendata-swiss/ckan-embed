@@ -34,7 +34,7 @@ describe('embed', function() {
     assert.ok(P.request.sort.indexOf('desc')>0);
     assert.ok(true === P.options.jsonp);
     assert.ok(null === P.options.proxy);
-    assert.ok('en' === P.options.lang);
+    assert.ok(null === P.options.lang);
   });
 
   it('should parametrize other request forms', function() {
