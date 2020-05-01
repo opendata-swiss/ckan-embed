@@ -20,15 +20,13 @@
   "contributors": [],
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^13.0.0",
-    "browserify-shim": "^3.8.12",
-    "chai": "^3.5.0",
-    "jquery": "^3.2.1",
-    "jshint": "^2.9.1",
-    "mocha": "^2.4.5",
-    "uglify-js": "^2.6.2",
-    "underscore": "^1.8.3",
-    "watchify": "^3.7.0"
+    "browserify": "^13.3",
+    "browserify-shim": "^3.8",
+    "chai": "^3.5",
+    "jshint": "^2.11",
+    "mocha": "^2.5",
+    "uglify-js": "^2.8",
+    "watchify": "^3.11"
   },
   "scripts": {
     "deploy": "npm run lint && npm run test",
@@ -50,9 +48,9 @@
     ]
   },
   "dependencies": {
-    "ckan": "^0.2.3",
-    "jquery": "^3.2.1",
-    "underscore": "^1.8.3"
+    "ckan": "git+ssh://git@github.com/loleg/ckan.js.git",
+    "jquery": "^3.5",
+    "underscore": "^1.10"
   },
   "engines": {
     "yarn": ">= 1.0.0"
