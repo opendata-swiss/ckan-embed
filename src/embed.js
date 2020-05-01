@@ -51,8 +51,13 @@ function generateView(url, packages, options) {
       .join(' ');
     };
 
+  function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  }
+
   // adjust url for language support
-  if (lang !== null) url = url + lang + '/';
+  if (lang !== null && !endsWith(url, lang + '/'))
+    url = url + lang + '/';
 
   // Pass the dataset results to the template
   for (var i in packages) {
@@ -106,7 +111,7 @@ function parametrize(options) {
   options.lang = _.isUndefined(options.lang) ?
     null : options.lang;
   options.template = _.isUndefined(options.template) ?
-    defaultTemplate() : options.template;
+    defaultTemplate() : _.template(options.template);
   options.noresult = _.isUndefined(options.noresult) ?
     'No datasets found' : options.noresult;
 

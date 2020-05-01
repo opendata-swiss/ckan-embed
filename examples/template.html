@@ -44,7 +44,7 @@
       fq:       'organization:schweizerische-nationalbibliothek-nb',
       rows:     5,
       noresult: 'Sorry, nothing found',
-      template: _.template(
+      template:
         '<tr class="ckan-dataset"><th>' +
         '<a href="<%= ds.url %>">' +
         '<h4><%= ds.title %></h4>' +
@@ -53,11 +53,10 @@
         '<td class="fmt"><%= ds.formats.toUpperCase() %></td>' +
         //'<small><%= ds.modified %></small>' +
         '</tr>'
-      )
     });
     </script>
 
-    <h3>3 results with custom template</h3>
+    <h3>3 results with a custom template</h3>
     <hr>
 
     <div class="ckan-embed opendata-swiss" id="example-2"></div>
@@ -68,7 +67,7 @@
       fq:       'organization:schweizerische-nationalbibliothek-nb',
       rows:     3,
       noresult: 'Sorry, nothing found',
-      template: _.template(
+      template:
         '<div class="ckan-dataset">' +
         '<a href="<%= ds.url %>">' +
         '<h4><%= ds.title %></h4>' +
@@ -77,7 +76,6 @@
         '<em>Formats:</em> <small><%= ds.formats.toUpperCase() %></small>' +
         //'<small><%= ds.modified %></small>' +
         '</div>'
-      )
     });
     </script>
   </body>

@@ -63,6 +63,7 @@ CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
 - `lang`: default language for result links
 - `jsonp`: toggle the use of JSONP (see note below)
 - `proxy`: relative or absolute path to API proxy
+- `template`: an HTML template for the results (see [example](examples/template.html))
 
 ## Usage notes
 
