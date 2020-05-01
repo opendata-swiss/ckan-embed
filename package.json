@@ -1,6 +1,6 @@
 {
   "name": "ckan-embed",
-  "version": "0.1.2",
+  "version": "1.0.3",
   "description": "Embed information from CKAN data portals into other websites.",
   "keywords": [
     "ckan",
@@ -24,7 +24,7 @@
     "browserify-shim": "^3.8",
     "chai": "^3.5",
     "jshint": "^2.11",
-    "mocha": "^2.5",
+    "mocha": "^7.1",
     "terser-webpack-plugin": "^3.0.0",
     "uglify-js": "^2.8",
     "watchify": "^3.11",
@@ -34,7 +34,7 @@
   "scripts": {
     "deploy": "yarn lint && yarn test && yarn build && yarn postbuild",
     "lint": "jshint src/",
-    "test": "mocha --timeout 5000 --recursive test/",
+    "test": "mocha --exit --timeout 5000 --recursive test/",
     "watch": "watchify src/embed.js -v -d -s CKANembed -o dist/ckan-embed.js",
     "build": "browserify src/embed.js -d -s CKANembed > dist/ckan-embed.js",
     "postbuild": "uglifyjs dist/ckan-embed.js -cm > dist/ckan-embed.min.js",
