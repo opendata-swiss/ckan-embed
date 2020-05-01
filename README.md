@@ -1,19 +1,21 @@
 # ckan-embed
 
-This module supports embedding information dynamically from CKAN data portals into other websites. Currently only dataset (package) search results are supported. For background on this project visit the [Swiss OGD Handbook](http://handbook.opendata.swiss/en/library/embed.html).
+This is a widget for embedding live data searches from CKAN data portals into external websites. Currently only dataset (package) search results are supported, but the module can easily support any calls through the [ckan-js](https://www.npmjs.com/package/ckan) library.
+
+For some background on this project, visit the [Swiss OGD Handbook](https://github.com/opendata-swiss/ogd-handbook-wiki/blob/master/library/embed.en.md).
 
 ## Usage notes
 
-This script can be used with any recent [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets function. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
+This script can be used with any [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets function. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
 
-Project dependencies include [jQuery](https://www.npmjs.com/package/jquery) (3.1+), [Underscore](https://www.npmjs.com/package/underscore) (1.8+), [ckan](https://www.npmjs.com/package/ckan) (0.2+).
+Project dependencies include [jQuery](https://www.npmjs.com/package/jquery), [Underscore](https://www.npmjs.com/package/underscore), [ckan](https://www.npmjs.com/package/ckan).
 
 # Installation
 
 (1) Add the *ckan-embed* script into the `<head>` of the page:
 
 ```html
-<script src="https://cdn.rawgit.com/opendata-swiss/ckan-embed/latest/dist/ckan-embed.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/opendata-swiss/ckan-embed/dist/ckan-embed.min.js"></script>
 ```
 
 This will include non-blocking versions of dependency scripts.
@@ -26,6 +28,15 @@ This will include non-blocking versions of dependency scripts.
 </div>
 ...
 <script>
+CKANembed.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
+</script>
+```
+
+Or, if you used previous versions of the script:
+
+```html
+<script>
+var ck = CKANembed; // backwards compatibility
 ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
@@ -36,8 +47,8 @@ The widget will then render in the `#example-1` container. Some styling possibil
 
 The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', without using JSONP* and instead proxying the requests through to the API at the `/ckanproxy/` path:
 
-```js
-ck.datasets('#example-2', 'https://opendata.swiss/', {
+```
+CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
 	fq:       'tags:hospitals',
 	rows:     3,
 	lang:     'de',
@@ -59,7 +70,7 @@ If you are running this script on the same server or using a backend proxy (supp
 
 The default sorting order is `name asc` (alphabetical name ascending). Besides `name`, `package_count` and `title` are allowed. On multilingual CKAN servers add language suffix e.g. `title_string_en`. For specifying ascending or descending order append `asc` or `desc`.
 
-For more usage examples see `test/index.html`.
+For more usage examples see the `examples` folder.
 
 ## Developer notes
 
@@ -74,7 +85,7 @@ To build `ckan-embed.js` and view the test examples, you must have [yarn](https:
 1. Run `yarn` in the ckan-embed folder to install dependencies.
 2. Run `yarn run build` (this will invoke [browserify](http://browserify.org/) to bundle the source files, and then [uglify-js](http://lisperator.net/uglifyjs/) to create the minified version).
 4. Run `yarn run deploy` to do tests and update the distributables.
-5. Start a local webserver (e.g., `python3 -m http.server 8000`) in the root folder and then point your web browser at the test directory (e.g., `http://localhost:8000/test/`).
+5. Start a local webserver (e.g., `python3 -m http.server 8000`) in the root folder and then point your web browser at the examples directory (e.g., `http://localhost:8000/examples/`).
 
 ## Acknowledgments
 

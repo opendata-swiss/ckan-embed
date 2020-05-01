@@ -5,9 +5,9 @@
     <title>CKAN Embed Test</title>
 
     <!-- Load library dependencies -->
-    <script src="../bower_components/underscore/underscore-min.js" charset="utf8"></script>
-    <script src="../bower_components/jquery/dist/jquery.min.js" charset="utf8"></script>
-    <script src="../node_modules/ckan/ckan.js" charset="utf8"></script>
+    <script src="../node_modules/underscore/underscore-min.js" charset="utf8"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
 
     <!-- Load the widget script -->
     <script src="../dist/ckan-embed.js"></script>
@@ -28,13 +28,14 @@
     <h2>Results for search query 'statistik'</h2>
     <hr>
 
-    <div class="opendata-swiss" id="example-1">
+    <div class="ckan-embed opendata-swiss" id="example-1">
       Loading
       <a href="https://opendata.swiss/de/dataset?q=statistik">'statistik' datasets</a>
       ...
     </div>
 
     <script>
+    var ck = CKANembed; // backwards compatibility
     // Basic example using opendata.swiss portal with defaults
     ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
     </script>

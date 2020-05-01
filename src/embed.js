@@ -1,8 +1,12 @@
+var CKANembed = {};
+
 var _ = require('underscore'),
     $ = require('jquery'),
     CKAN = require('ckan');
 
-var config = {};
+module.exports = CKANembed;
+
+(function(embed) {
 
 // Default HTML format of the widget
 function defaultTemplate() {
@@ -26,7 +30,7 @@ function truncate(str, length, truncateStr) {
   truncateStr = truncateStr || '...';
   length = ~~length;
   return str.length > length ? str.slice(0, length) + truncateStr : str;
-}
+};
 
 /* Support function to publish data to page */
 function generateView(url, packages, options) {
@@ -69,7 +73,7 @@ function generateView(url, packages, options) {
   if (fragments.length === 0) return null;
   return fragments.join('');
 
-} // -generateView
+}; // -generateView
 
 // Parse query into a CKAN request
 function parametrize(options) {
@@ -107,29 +111,28 @@ function parametrize(options) {
     'No datasets found' : options.noresult;
 
   return { 'request': request, 'options': options };
-}
+};
 
 // Embed a CKAN dataset result in a web page.
 // el: DOM element in which to place component (DOM node or CSS selector)
 // url: Source portal (URL string)
 // options: Parameters for CKAN API (object) or search query (string)
 // callback: invoked with the loaded CKAN client
-function datasets(el, url, options, callback) {
-  var cb = callback || function(){},
-      client, packages;
+embed.datasets = function (el, url, options, callback) {
+  var cb = callback || function(){};
 
   try {
     var p = parametrize(options);
     if (p === null)
       return cb('Please provide a query');
-    request = p['request'];
-    options = p['options'];
+    request = p.request;
+    options = p.options;
 
     // ensure container div has class
     var div = $(el).addClass('ckan-embed');
 
     // create a client
-    client = new CKAN.Client(options.proxy || url);
+    var client = new CKAN.Client(options.proxy || url);
     var action = 'package_search';
 
     // extend ckan.js action routine with jsonp support
@@ -145,10 +148,10 @@ function datasets(el, url, options, callback) {
         if (err !== null) { cb(err); return; }
       })
       .done(function(res) {
-        packages = res.result.results;
-        var res = generateView(url, packages, options);
+        var packages = res.result.results;
+        var res2 = generateView(url, packages, options);
         // Insert into container on page
-        div.html(res ? res : options.noresult);
+        div.html(res2 ? res2 : options.noresult);
         // Continue with callback
         cb(null, {client: client, request: request, packages: packages});
       });
@@ -157,20 +160,22 @@ function datasets(el, url, options, callback) {
       // recommended default usage of ckan.js, e.g. through CORS or proxy
       client.action(action, request, function(err, res) {
         if (err !== null) { cb(err); return; }
-        packages = res.result.results;
-        var res = generateView(url, packages, options);
+        var packages = res.result.results;
+        var res2 = generateView(url, packages, options);
         // Insert into container on page
-        div.html(res ? res : options.noresult);
+        div.html(res2 ? res2 : options.noresult);
         // Continue with callback
         cb(null, {client: client, request: request, packages: packages});
       });
     }
 
   } catch (err) { cb(err); }
-} //-datasets
+}; //-datasets
 
-exports.datasets = datasets;
-exports.template = defaultTemplate;
-exports.truncate = truncate;
-exports.parametrize = parametrize;
-exports.generateView = generateView;
+// Export utilities, for testing:
+
+embed.truncate = truncate;
+embed.parametrize = parametrize;
+embed.generateView = generateView;
+
+}(CKANembed));

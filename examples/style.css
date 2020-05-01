@@ -14,13 +14,15 @@
 }
 .ckan-embed {
   margin-top: 5px;
-  background-position: right 5px;
-  background-size: auto 20px;
+  background-position: bottom right;
   background-repeat: no-repeat;
+  background-size: auto 20px;
+  padding-bottom: 30px;
 }
-.opendata-swiss {
+.ckan-embed.opendata-swiss {
   background-image: url('https://opendata.swiss/content/themes/wp-ogdch-theme/assets/images/logo_horizontal.svg');
 }
+  background-size: 185px;
 
 /*
  Test document styles

@@ -5,9 +5,9 @@
     <title>CKAN Embed Test</title>
 
     <!-- Load library dependencies -->
-    <script src="../bower_components/underscore/underscore-min.js" charset="utf8"></script>
-    <script src="../bower_components/jquery/dist/jquery.min.js" charset="utf8"></script>
-    <script src="../node_modules/ckan/ckan.js" charset="utf8"></script>
+    <script src="../node_modules/underscore/underscore-min.js" charset="utf8"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
 
     <!-- Load the widget script -->
     <script src="../dist/ckan-embed.js"></script>
@@ -28,9 +28,10 @@
     <h2>Search datasets from the National Library, 3 results</h2>
     <hr>
 
-    <div class="opendata-swiss" id="example-2"></div>
+    <div class="ckan-embed opendata-swiss" id="example-2"></div>
 
     <script>
+    var ck = CKANembed; // backwards compatibility
     ck.datasets('#example-2', 'https://opendata.swiss/', {
       fq:       'organization:schweizerische-nationalbibliothek-nb',
       rows:     3
@@ -40,7 +41,7 @@
     <h2>Search for tag 'hospitals', 3 results, JSONP enabled, with logging</h2>
     <hr>
 
-    <div class="opendata-swiss" id="example-3"></div>
+    <div class="ckan-embed opendata-swiss" id="example-3"></div>
 
     <script>
     ck.datasets('#example-3', 'https://opendata.swiss/', {

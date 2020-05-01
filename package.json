@@ -29,12 +29,12 @@
     "watchify": "^3.11"
   },
   "scripts": {
-    "deploy": "npm run lint && npm run test",
+    "deploy": "yarn lint && yarn test && yarn build && yarn postbuild",
     "lint": "jshint src/",
     "test": "mocha --timeout 5000 --recursive test/",
-    "build": "browserify src/embed.js -d -s ck > dist/ckan-embed.js",
+    "build": "browserify src/embed.js -d -s CKANembed > dist/ckan-embed.js",
     "postbuild": "uglifyjs dist/ckan-embed.js -cm > dist/ckan-embed.min.js",
-    "watch": "watchify src/embed.js -v -d -s ck -o dist/ckan-embed.js"
+    "watch": "watchify src/embed.js -v -d -s CKANembed -o dist/ckan-embed.js"
   },
   "main": "src/embed.js",
   "browserify-shim": {
@@ -48,7 +48,7 @@
     ]
   },
   "dependencies": {
-    "ckan": "git+ssh://git@github.com/loleg/ckan.js.git",
+    "ckan": "git+ssh://git@github.com/okfn/ckan.js.git",
     "jquery": "^3.5",
     "underscore": "^1.10"
   },

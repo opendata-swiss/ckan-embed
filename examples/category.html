@@ -2,12 +2,12 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <title>CKAN Embed Test</title>
+    <title>CKAN Embed category test</title>
 
     <!-- Load library dependencies -->
-    <script src="../bower_components/underscore/underscore-min.js" charset="utf8"></script>
-    <script src="../bower_components/jquery/dist/jquery.min.js" charset="utf8"></script>
-    <script src="../node_modules/ckan/ckan.js" charset="utf8"></script>
+    <script src="../node_modules/underscore/underscore-min.js" charset="utf8"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
 
     <!-- Load the widget script -->
     <script src="../dist/ckan-embed.js"></script>
@@ -25,7 +25,7 @@
     </p>
     <p>&lt; Back to <a href="index.html">basic tests</a>.</p>
 
-    <h2>Search datasets with selection of (static, TODO: dynamic) category.</h2>
+    <h2>Search datasets with selection of category.</h2>
     <hr>
 
     <ul id="groupSelector" class="nav nav-pills nav-stacked">
@@ -56,9 +56,10 @@
       </li>
   </ul>
 
-    <div class="opendata-swiss" id="example-2"></div>
+    <div class="ckan-embed opendata-swiss" id="example-2"></div>
 
     <script>
+    var ck = CKANembed; // backwards compatibility
     function embedGroup(group) {
       ck.datasets('#example-2', 'https://opendata.swiss/de/', {
         fq:       'organization:kanton-thurgau groups:' + group,
