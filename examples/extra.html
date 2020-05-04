@@ -31,8 +31,7 @@
     <div class="ckan-embed opendata-swiss" id="example-2"></div>
 
     <script>
-    var ck = CKANembed; // backwards compatibility
-    ck.datasets('#example-2', 'https://opendata.swiss/', {
+    CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
       fq:       'organization:schweizerische-nationalbibliothek-nb',
       rows:     3
     });
@@ -44,7 +43,7 @@
     <div class="ckan-embed opendata-swiss" id="example-3"></div>
 
     <script>
-    ck.datasets('#example-3', 'https://opendata.swiss/', {
+    CKANembed.datasets('#example-3', 'https://opendata.swiss/', {
       fq:       'tags:hospitals',
       rows:     3,
       jsonp:    true

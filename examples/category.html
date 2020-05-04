@@ -57,9 +57,8 @@
     <div class="ckan-embed opendata-swiss" id="example-2"></div>
 
     <script>
-    var ck = CKANembed; // backwards compatibility
     function embedGroup(group) {
-      ck.datasets('#example-2', 'https://opendata.swiss/de/', {
+      CKANembed.datasets('#example-2', 'https://opendata.swiss/de/', {
         fq:       'organization:kanton-thurgau groups:' + group,
         rows:     20,
         lang:     'de',
@@ -70,7 +69,7 @@
           '<a href="<%= ds.url %>">' +
           '<h4><%= ds.title %></h4>' +
           '</a>' +
-          '<p><%= ck.truncate(ds.description, 250) %></p>' +
+          '<p><%= CKANembed.truncate(ds.description, 250) %></p>' +
           '<em>Formats:</em> <small><%= ds.formats.toUpperCase() %></small>' +
           //'<small><%= ds.modified %></small>' +
           '</div>'

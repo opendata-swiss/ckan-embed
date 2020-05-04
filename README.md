@@ -12,27 +12,42 @@ Project dependencies include [jQuery](https://www.npmjs.com/package/jquery), [Un
 
 # Installation
 
-(1) Add the *ckan-embed* script into the `<head>` of the page:
+(1) Add the *ckan-embed* script into the page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/opendata-swiss/ckan-embed/dist/ckan-embed.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/opendata-swiss/ckan-embed/dist/ckan-embed.bundle.js"></script>
 ```
 
-This will include non-blocking versions of dependency scripts.
+This includes non-blocking versions of dependency scripts. It is a relatively large (> 500 KB download - see [issue #14](https://github.com/opendata-swiss/ckan-embed/issues/14)), so if you are loading the project dependencies listed above in your web page already, use the minified version `ckan-embed.min.js` (only 37 KB) instead.
 
-(2) Now place the container somewhere on the page, and add the init code:
+(2) Place the container somewhere on the page:
 
 ```html
 <div id="example-1">
 	Loading '<a href="https://opendata.swiss">statistik</a>' datasets ...
 </div>
+```
+
+(3) Add the init code - this will work if your script is in the header:
+
+```html
 ...
 <script>
 CKANembed.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
 
-Or, if you used previous versions of the script:
+The widget will then render in the `#example-1` container. Some styling possibilities, such as showing the logo of the portal, are explored in `test/style.css`.
+
+We recommend placing the script in the foot of the page and running this command in an `onload` routine for better performance, e.g.:
+
+```js
+$(document).ready(function() {
+  CKANembed.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
+});
+```
+
+If you used previous versions of the script, mind the fact that we've changed the global from `ck` to `CKANembed`:
 
 ```html
 <script>
@@ -40,8 +55,6 @@ var ck = CKANembed; // backwards compatibility
 ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
-
-The widget will then render in the `#example-1` container. Some styling possibilities, such as showing the logo of the portal, are explored in `test/style.css`.
 
 ### Advanced options
 
