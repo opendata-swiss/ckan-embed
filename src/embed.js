@@ -43,7 +43,7 @@ function generateView(url, packages, options) {
   var fragments = [];
   var getLangDefault = function(n) {
     if (lang !== null && n[lang]) return n[lang];
-    return n.fr || n.de || n.it || n.en || n;
+    return n.fr || n.de || n.it || n.en || n || '';
   };
   var getDatasetFormats = function(res) {
     return _.uniq(_.map(res,
@@ -63,10 +63,14 @@ function generateView(url, packages, options) {
   for (var i in packages) {
     var dso = packages[i];
     var dsogroupname = (dso.groups.length === 0) ? '' :
-          getLangDefault(dso.groups[0].display_name);
+          Object.keys(dso.groups[0].display_name).length ?
+            getLangDefault(dso.groups[0].display_name) :
+            getLangDefault(dso.groups[0].title);
     var ds = {
       url:           url + 'dataset/' + dso.name,
-      title:         getLangDefault(dso.display_name),
+      title:         Object.keys(dso.display_name).length ?
+                      getLangDefault(dso.display_name) :
+                      getLangDefault(dso.title),
       groupname:     dsogroupname,
       description:   getLangDefault(dso.description),
       formats:       getDatasetFormats(dso.resources),
