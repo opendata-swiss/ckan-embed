@@ -38,8 +38,8 @@
         </a>
       </li>
       <li class="nav-item break-word">
-        <a href="#" data-group="finances">
-          Finances
+        <a href="#" data-group="education">
+          Education
         </a>
       </li>
       <li class="nav-item break-word">
@@ -58,8 +58,8 @@
 
     <script>
     function embedGroup(group) {
-      CKANembed.datasets('#example-2', 'https://opendata.swiss/de/', {
-        fq:       'organization:kanton-thurgau groups:' + group,
+      CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
+        fq:       'organization:openglam groups:' + group,
         rows:     20,
         lang:     'de',
         sort:     'title_string_de asc',
