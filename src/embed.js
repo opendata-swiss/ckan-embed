@@ -246,7 +246,7 @@ embed.dataset = function (el, url, id, callback) {
     } else {
       // recommended default usage of ckan.js, e.g. through CORS or proxy
       client.action(action, request, function(err, res) {
-        if (err !== null) { console.warn(err); cb(err); return; }
+        if (err !== null) { cb(err); return; }
         showPackages(request, url, [ res.result ], options, div, cb);
       });
     }

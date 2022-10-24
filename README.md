@@ -2,7 +2,7 @@
 
 This is a widget for embedding live data searches from CKAN data portals into external websites. Currently only dataset (package) search results are supported, but the module can easily support any calls through the [ckan-js](https://www.npmjs.com/package/ckan) library.
 
-For some background on this project, visit the [Swiss OGD Handbook](https://github.com/opendata-swiss/ogd-handbook-wiki/blob/master/library/embed.en.md).
+For some background on this project, visit the [Swiss OGD Handbook](https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html).
 
 ## Usage notes
 
