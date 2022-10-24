@@ -5,7 +5,7 @@
     <title>CKAN Embed category test</title>
 
     <!-- Load library dependencies -->
-    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/jquery/dist/jquery.js" charset="utf8"></script>
 
     <!-- Load the widget script -->
     <script src="../dist/ckan-embed.bundle.js"></script>
@@ -18,7 +18,7 @@
     <h1>CKAN Embed category test</h1>
     <p>
       For more information visit the
-      <a href="http://handbook.opendata.swiss/en/library/embed.html">Handbook documentation</a> and
+      <a href="https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html">Handbook documentation</a> and
       <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
     </p>
     <p>&lt; Back to <a href="index.html">basic tests</a>.</p>
@@ -58,7 +58,7 @@
 
     <script>
     function embedGroup(group) {
-      CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
+      CKANembed.search('#example-2', 'https://opendata.swiss/', {
         fq:       'organization:openglam groups:' + group,
         rows:     20,
         lang:     'de',

@@ -34,6 +34,7 @@
   "scripts": {
     "deploy": "yarn lint && yarn test && yarn build && yarn postbuild",
     "lint": "jshint src/",
+    "clean": "rm dist/*",
     "test": "mocha --exit --timeout 5000 --recursive test/",
     "watch": "watchify src/embed.js -v -d -s CKANembed -o dist/ckan-embed.js",
     "build": "browserify src/embed.js -d -s CKANembed > dist/ckan-embed.js",

@@ -10,7 +10,7 @@
     <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
 
     <!-- Load the widget script -->
-    <script src="../dist/ckan-embed.js"></script>
+    <script src="../dist/ckan-embed.bundle.js"></script>
 
     <!-- Some example styles -->
     <link rel="stylesheet" href="style.css">
@@ -20,7 +20,7 @@
     <h1>CKAN Embed advanced test page</h1>
     <p>
       For more information visit the
-      <a href="http://handbook.opendata.swiss/en/library/embed.html">Handbook documentation</a> and
+      <a href="https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html">Handbook documentation</a> and
       <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
     </p>
     <p>&lt; Back to <a href="index.html">basic tests</a>.</p>
@@ -31,7 +31,7 @@
     <div class="ckan-embed opendata-swiss" id="example-2"></div>
 
     <script>
-    CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
+    CKANembed.search('#example-2', 'https://opendata.swiss/', {
       fq:       'organization:schweizerische-nationalbibliothek-nb',
       rows:     3
     });
@@ -43,7 +43,7 @@
     <div class="ckan-embed opendata-swiss" id="example-3"></div>
 
     <script>
-    CKANembed.datasets('#example-3', 'https://opendata.swiss/', {
+    CKANembed.search('#example-3', 'https://opendata.swiss/', {
       fq:       'tags:hospitals',
       rows:     3,
       jsonp:    true

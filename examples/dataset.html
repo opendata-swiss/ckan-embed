@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>CKAN Embed dataset test</title>
+
+    <!-- Load library dependencies -->
+    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+
+    <!-- Load the widget script -->
+    <script src="../dist/ckan-embed.bundle.js"></script>
+
+    <!-- Some example styles -->
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+    <h1>CKAN Specific dataset test</h1>
+    <p>
+      For more information visit the
+      <a href="https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html">Handbook documentation</a> and
+      <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
+    </p>
+    <p>&lt; Back to <a href="index.html">basic tests</a>.</p>
+
+    <div class="opendata-swiss" id="example-1"></div>
+
+    <script>
+      CKANembed.dataset('#example-1', 'https://opendata.swiss/de/dataset/bauzonen-im-kanton-zurich');
+    </script>
+    <style>
+    </style>
+  </body>
+</html>

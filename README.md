@@ -6,7 +6,7 @@ For some background on this project, visit the [Swiss OGD Handbook](https://gith
 
 ## Usage notes
 
-This script can be used with any [CKAN](http://ckan.org) portal. It exposes a ck module which has a datasets function. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
+This script can be used with any [CKAN](http://ckan.org) portal. It exposes a `CKANembed` module with several functions. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
 
 Project dependencies include [jQuery](https://www.npmjs.com/package/jquery), [Underscore](https://www.npmjs.com/package/underscore), [ckan](https://www.npmjs.com/package/ckan).
 
@@ -18,7 +18,7 @@ Project dependencies include [jQuery](https://www.npmjs.com/package/jquery), [Un
 <script src="https://cdn.jsdelivr.net/gh/opendata-swiss/ckan-embed/dist/ckan-embed.bundle.js"></script>
 ```
 
-This includes non-blocking versions of dependency scripts. It is a relatively large (> 500 KB download - see [issue #14](https://github.com/opendata-swiss/ckan-embed/issues/14)), so if you are loading the project dependencies listed above in your web page already, use the minified version `ckan-embed.min.js` (only 37 KB) instead.
+This includes non-blocking versions of dependency scripts. It is a relatively large (~500 KB download - see [issue #14](https://github.com/opendata-swiss/ckan-embed/issues/14)), so if you are loading the project dependencies listed above in your web page already, use the minified version `ckan-embed.min.js` (~40 KB) instead.
 
 (2) Place the container somewhere on the page:
 
@@ -33,7 +33,7 @@ This includes non-blocking versions of dependency scripts. It is a relatively la
 ```html
 ...
 <script>
-CKANembed.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
+CKANembed.search('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
 
@@ -43,16 +43,20 @@ We recommend placing the script in the foot of the page and running this command
 
 ```js
 $(document).ready(function() {
-  CKANembed.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
+  CKANembed.search('#example-1', 'https://opendata.swiss/', 'statistik');
 });
 ```
+
+### Upgrading
+
+We have changed from `datasets` to `search` for the call that returns multiple results, to avoid confusion with the singular `dataset` method. The old function name will continue to work.
 
 If you used previous versions of the script, mind the fact that we've changed the global from `ck` to `CKANembed`:
 
 ```html
 <script>
 var ck = CKANembed; // backwards compatibility
-ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
+ck.search('#example-1', 'https://opendata.swiss/', 'statistik');
 </script>
 ```
 
@@ -61,7 +65,7 @@ ck.datasets('#example-1', 'https://opendata.swiss/', 'statistik');
 The script may also be initialized with a configuration object, for example in this case to show three datasets tagged 'hospitals', without using JSONP* and instead proxying the requests through to the API at the `/ckanproxy/` path:
 
 ```
-CKANembed.datasets('#example-2', 'https://opendata.swiss/', {
+CKANembed.search('#example-2', 'https://opendata.swiss/', {
 	fq:       'tags:hospitals',
 	rows:     3,
 	lang:     'de',
