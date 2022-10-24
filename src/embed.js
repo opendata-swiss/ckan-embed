@@ -85,6 +85,28 @@ function generateView(url, packages, options) {
 
 } // -generateView
 
+// Parse URL into dataset query
+function urlToDataset(url) {
+  var id = null;
+  var dsl = url.split('/dataset/');
+  if (dsl.length) {
+    id = dsl[1];
+    // The dataset identifier is the last part of the path (usually)
+    if (id.indexOf('/') > 0) {
+      id = id.split('/')[0];
+    }
+    url = dsl[0];
+    // Keep only first part of URL (without language extension)
+    if (url.lastIndexOf('/') > 10) {
+      url = url.replace('//', '\\').split('/')[0].replace('\\', '//');
+    }
+    if (!url.endsWith('/')) url += '/';
+  } else {
+    return null;
+  }
+  return {'id': id, 'url': url};
+}
+
 // Parse query into a CKAN request
 function parametrize(options) {
   var request = {};
@@ -96,17 +118,24 @@ function parametrize(options) {
       request.q = options.q;
     } else if (!_.isUndefined(options.fq)) {
       request.fq = options.fq;
+    } else if (!_.isUndefined(options.id)) {
+      request.id = options.id;
     } else {
       // No query provided
       return null;
     }
   }
-  // Default sort order is by descending modified date
-  request.sort = _.isUndefined(options.sort) ?
-    'metadata_modified desc' : options.sort;
-  // Fetches 5 rows by default
-  request.rows = _.isUndefined(options.rows) ?
-    5 : options.rows;
+
+  // For queries only
+  if (_.isUndefined(request.id)) {
+
+    // Default sort order is by descending modified date
+    request.sort = _.isUndefined(options.sort) ?
+      'metadata_modified desc' : options.sort;
+    // Fetches 5 rows by default
+    request.rows = _.isUndefined(options.rows) ?
+      5 : options.rows;
+  }
 
   // parse configuration options
   options.jsonp = _.isUndefined(options.jsonp) ?
@@ -190,32 +219,36 @@ embed.datasets = embed.search; // compatibility
 // url: Link to dataset or root of the portal (URL string)
 // id: Parameter for CKAN package_show API (dataset by ID) if not in url
 // callback: invoked with the loaded CKAN client
-embed.dataset = function (el, url, id, callback) {
+embed.dataset = function (el, url, options, callback) {
   var cb = callback || function(){};
+
+  options = options || {};
+  if (_.isUndefined(options.id) && !_.isUndefined(url)) {
+    var u = urlToDataset(url);
+    options.id = u.id;
+    url = u.url;
+  }
+
+  var p = parametrize(options);
+  if (p === null)
+    return cb('Please provide a URL, or id in your options');
+
+  options = p.options;
+  var request = p.request;
 
   try {
     if (!url) {
       console.warn('No URL provided for embedding');
       return cb('Please provide a URL link');
     }
-    if (!id) {
-      var dsl = url.split('/dataset/');
-      if (dsl.length) {
-        id = dsl[1];
-        url = dsl[0];
-        if (id.indexOf('/') > 0) {
-          id = id.split('/')[0];
-        }
-      } else {
-        console.warn('Invalid URL:', url);
-      }
-      if (!id) {
-        console.warn('Invalid URL:', url);
+    if (!request.id) {
+
+      if (!request.id) {
+        console.warn('Invalid URL or no ID provided:', url);
         return cb('Please provide an ID or link to a dataset');
       }
     }
-
-    console.log('Embedding:', url, id)
+    // console.debug('Embedding:', url, request.id);
 
     // initialize client if needed
     if (!CKANclient)

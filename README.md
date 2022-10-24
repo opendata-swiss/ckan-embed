@@ -101,9 +101,12 @@ A web server like [NGINX can be used](https://www.nginx.com/resources/admin-guid
 To build `ckan-embed.js` and view the test examples, you must have [yarn](https://yarnpkg.com/) installed.
 
 1. Run `yarn` in the ckan-embed folder to install dependencies.
-2. Run `yarn run build` (this will invoke [browserify](http://browserify.org/) to bundle the source files, and then [uglify-js](http://lisperator.net/uglifyjs/) to create the minified version).
-4. Run `yarn run deploy` to do tests and update the distributables.
-5. Start a local webserver (e.g., `python3 -m http.server 8000`) in the root folder and then point your web browser at the examples directory (e.g., `http://localhost:8000/examples/`).
+1. With `yarn dev` and `yarn watch` the code will be compiled.
+1. Start a local webserver with `yarn dev` then open http://localhost:8000/examples/
+1. Run `yarn run build`* for a production release.
+1. Run `yarn run deploy` to do tests and update the distributables.
+
+(* this will invoke [browserify](http://browserify.org/) to bundle the source files, and then [uglify-js](http://lisperator.net/uglifyjs/) to create the minified version).
 
 ## Acknowledgments
 
