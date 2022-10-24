@@ -89,7 +89,7 @@ function generateView(url, packages, options) {
 function urlToDataset(url) {
   var id = null;
   var dsl = url.split('/dataset/');
-  if (dsl.length) {
+  if (dsl.length == 2) {
     id = dsl[1];
     // The dataset identifier is the last part of the path (usually)
     if (id.indexOf('/') > 0) {
