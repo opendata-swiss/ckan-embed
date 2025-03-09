@@ -16,9 +16,9 @@ function defaultTemplate() {
     '<a href="<%= ds.url %>">' +
     '<h5><%= ds.title %></h5>' +
     '</a>' +
+    '<small><b><%= ds.groupname %></b></small>' +
     '<p><%= ds.description %></p>' +
-    '<b><%= ds.groupname %></b><br>' +
-    '<small><%= ds.formats %></small>' +
+    '<small><%= ds.formats %> &bull; <%= ds.license %></small>' +
     //'<small><%= ds.modified %></small>' +
     '</div>'
   );
@@ -52,9 +52,11 @@ function generateView(url, packages, options) {
   var lang = options.lang;
   var fragments = [];
   var hasObjKey = function(o, k) {
-    return Object.values(o).indexOf(k) > -1;
+    return (Object.keys(o).indexOf(k) > -1)
+      && o[k] !== null && o[k] !== '' && o[k] != {};
   }
   var getLangDefault = function(n) {
+    if (typeof n === 'undefined') return '';
     if (typeof n === 'string') return n;
     if (lang !== null && hasObjKey(n, lang)) return n[lang];
     return n.fr || n.de || n.it || n.en || '';
@@ -73,18 +75,22 @@ function generateView(url, packages, options) {
   for (var i in packages) {
     var dso = packages[i];
     var dsogroupname = (dso.groups.length === 0) ? '' :
-          Object.keys(dso.groups[0].display_name).length ?
+          hasObjKey(dso.groups[0], 'display_name') ?
             getLangDefault(dso.groups[0].display_name) :
             getLangDefault(dso.groups[0].title);
+    var dsotitle = getLangDefault(dso.display_name) ||
+                   getLangDefault(dso.title) || '';
+    var dsonotes = getLangDefault(dso.description) ||
+                   getLangDefault(dso.notes) || '';
+    var dsolicense = dso.license_id || dso.license_title || dso.license || '';
     var ds = {
       url:           url + 'dataset/' + dso.name,
-      title:         Object.keys(dso.display_name).length ?
-                      getLangDefault(dso.display_name) :
-                      getLangDefault(dso.title),
+      title:         dsotitle,
       groupname:     dsogroupname,
-      description:   getLangDefault(dso.description),
+      description:   dsonotes,
       formats:       getDatasetFormats(dso.resources),
-      modified:      dso.metadata_modified
+      modified:      dso.metadata_modified,
+      license:       dsolicense
     };
     fragments.push(template_widget({ ds: ds, dso: dso }));
   }
