@@ -1,10 +1,10 @@
 # ckan-embed
 
-This is a widget for embedding live data searches from CKAN data portals into external websites. Currently only dataset (package) search results are supported, but the module can easily support any calls through the [ckan-js](https://www.npmjs.com/package/ckan) library.
+This is a widget for embedding live data searches from CKAN data portals into external websites. Currently only dataset (package) search results are supported, but the module can easily support any calls through the [ckan-js](https://www.npmjs.com/package/ckan) library. For some background on this project, visit the [Swiss OGD Handbook](https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html).
 
-For some background on this project, visit the [Swiss OGD Handbook](https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html).
+**Nota Bene:** this project is not very actively maintained, and includes a deprecated dependency. See [Issue #45](https://github.com/opendata-swiss/ckan-embed/issues/45) for alternative options.
 
-Demo: [example pages](https://opendata-swiss.github.io/ckan-embed/examples/)
+**Demo:** [example pages](https://opendata-swiss.github.io/ckan-embed/examples/)
 
 ## Usage notes
 
