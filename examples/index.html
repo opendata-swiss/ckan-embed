@@ -4,34 +4,77 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <title>CKAN Embed Test</title>
 
-    <!-- Load the widget bundle -->
-    <script src="../dist/ckan-embed.bundle.js"></script>
+    <!-- Load the widget -->
+    <script src="../node_modules/jquery/dist/jquery.min.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
+    <script src="../dist/ckan-embed.js"></script>
 
     <!-- Some example styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="https://ckan.org/static/img/ckan.ico">
   </head>
   <body>
-    <h1>CKAN Embed test page</h1>
+    <h1>CKAN Embed</h1>
     <p>
       For more information visit the
       <a href="https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html">Handbook documentation</a> and
       <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
     </p>
-    <p>See also <a href="dataset.html">Single Dataset</a>, <a href="extra.html">Advanced</a>, <a href="template.html">Template</a>, and <a href="category.html">Category</a> tests.</p>
+    <p style="font-weight: bold;">
+      See also 
+      <a href="basic.html">Basic</a>, 
+      <a href="dataset.html">1 Dataset</a>, 
+      <a href="extra.html">Advanced</a>, 
+      <a href="template.html">Template</a>, and 
+      <a href="category.html">Category</a> tests.
+    </p>
 
-    <h2>Results for search query 'statistik'</h2>
+    <h2>Search form</h2>
     <hr>
 
-    <div class="ckan-embed opendata-swiss" id="example-1">
-      Loading
-      <a href="https://opendata.swiss/de/dataset?q=statistik">'statistik' datasets</a>
-      ...
-    </div>
+<p>To get started with <a href="https://handbook.opendata.swiss/content/glossar/bibliothek/embed.html" target="_blank">embedding</a> a dataset from
+    <a href="https://opendata.swiss" target="_blank"><b>opendata.swiss</b></a>,
+    type a search term:
+  </p>
 
-    <script>
-    // Basic example using opendata.swiss portal with defaults
-    CKANembed.search('#example-1', 'https://opendata.swiss/', 'statistik');
-    </script>
+  <form id="form-widget">
+    <input type="text" id="input-search"><button type="submit">Search ...</button>
+  </form>
+
+  <div id="embed-tip" style="display:none; margin-top: 1em; padding:1em; background: lightyellow" role="alert">
+    Press Ctrl-C to copy the HTML code to paste the result below into your webpage.
+    For additional options, see
+    <a href="https://github.com/opendata-swiss/ckan-embed/blob/master/README.md#ckan-embed" target="_blank">documentation</a>.
+    <br><textarea id="embed-code" rows=3 style="width:100%"></textarea>
+  </div>
+
+  <div id="example-1" style="border:1px solid #ccc; padding:1em 2em; margin-top:2em">
+    Results of your search query should appear here.
+  </div>
+
+  <script>
+
+    $('#form-widget').submit(function(e) {
+      e.preventDefault(); e.stopPropagation();
+      var q = $('#input-search').val();
+      // Show the tip
+      $('#embed-tip').show();
+      // Provide an embed code
+      var embedcode = ''.concat(
+        '<script src="https://cdn.jsdelivr.net/gh/opendata-swiss/ckan-embed@1/dist/ckan-embed.bundle.js"></','script>',
+        '<div id="ckan-embed-1"></div>',
+        '<script>CKANembed.datasets("#ckan-embed-1","https://opendata.swiss/","', q, '");</','script>'
+      );
+      var tgt = $('#embed-code');
+      tgt.val(embedcode).focus();
+      tgt[0].setSelectionRange(0, embedcode.length);
+      // Run the test query
+      CKANembed.datasets('#example-1', 'https://opendata.swiss/', {
+        q: q,
+        rows: 3
+      });
+    });
+  </script>
+
   </body>
 </html>

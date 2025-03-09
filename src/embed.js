@@ -33,6 +33,15 @@ function truncate(str, length, truncateStr) {
   return str.length > length ? str.slice(0, length) + truncateStr : str;
 }
 
+function endsWith(str, suffix) {
+  return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function validate(str) {
+  let regex = /^[\p{L}\p{N} \\-]+$/u;
+  return regex.test(str);
+}
+
 /* Support function to publish data to page */
 function generateView(url, packages, options) {
 
@@ -54,11 +63,7 @@ function generateView(url, packages, options) {
     return _.uniq(_.map(res,
       function(r) { return r.format; }))
       .join(' ');
-    };
-
-  function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-  }
+  };
 
   // adjust url for language support
   if (lang !== null && !endsWith(url, lang + '/'))
@@ -67,7 +72,6 @@ function generateView(url, packages, options) {
   // Pass the dataset results to the template
   for (var i in packages) {
     var dso = packages[i];
-    console.log(dso);
     var dsogroupname = (dso.groups.length === 0) ? '' :
           Object.keys(dso.groups[0].display_name).length ?
             getLangDefault(dso.groups[0].display_name) :
@@ -118,9 +122,11 @@ function parametrize(options) {
   if (_.isString(options)) {
     request.q = options;
     options = {};
+    if (!validate(request.q)) return null;
   } else {
     if (!_.isUndefined(options.q)) {
       request.q = options.q;
+      if (!validate(request.q)) return null;
     } else if (!_.isUndefined(options.fq)) {
       request.fq = options.fq;
     } else if (!_.isUndefined(options.id)) {
@@ -173,7 +179,7 @@ function showPackages(request, url, packages, options, div, cb) {
 // options: Parameters for CKAN API package_search (object) or search query (string)
 // callback: invoked with the loaded CKAN client
 embed.search = function (el, url, options, callback) {
-  var cb = callback || function(){};
+  var cb = callback || function(e){ if (e) console.error(e); };
 
   try {
     var p = parametrize(options);

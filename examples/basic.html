@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>CKAN Embed Test</title>
+
+    <!-- Load the widget -->
+    <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
+    <script src="../dist/ckan-embed.js"></script>
+
+    <!-- Some example styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://ckan.org/static/img/ckan.ico">
+  </head>
+  <body>
+    <h1>CKAN Embed basic test</h1>
+    <p>
+      For more information visit the
+      <a href="https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html">Handbook documentation</a> and
+      <a href="https://github.com/opendata-swiss/ckan-embed">GitHub project</a>.
+    </p>
+    <p>&lt; Back to <a href="index.html">start page</a>.</p>
+
+    <h2>Results for search query 'Köniz'</h2>
+    <hr>
+
+    <div class="ckan-embed opendata-swiss" id="example-1">
+      Loading
+      <a href="https://opendata.swiss/de/dataset?q=Köniz">'Köniz' datasets</a>
+      ...
+    </div>
+
+    <script>
+    // Basic example using opendata.swiss portal with defaults
+    CKANembed.search('#example-1', 'https://opendata.swiss/', 'Köniz');
+    </script>
+  </body>
+</html>
