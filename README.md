@@ -4,6 +4,8 @@ This is a widget for embedding live data searches from CKAN data portals into ex
 
 For some background on this project, visit the [Swiss OGD Handbook](https://handbook.opendata.swiss/de/content/glossar/bibliothek/embed.html).
 
+Demo: [example pages](https://opendata-swiss.github.io/ckan-embed/examples/)
+
 ## Usage notes
 
 This script can be used with any [CKAN](http://ckan.org) portal. It exposes a `CKANembed` module with several functions. The first parameter is the DOM container into which the widget should be loaded, the second parameter a fully qualified URL to the target CKAN portal, and the third can be a free text search query (for example, "statistik").
