@@ -42,9 +42,13 @@ function generateView(url, packages, options) {
   // Helper functions to massage the results
   var lang = options.lang;
   var fragments = [];
+  var hasObjKey = function(o, k) {
+    return Object.values(o).indexOf(k) > -1;
+  }
   var getLangDefault = function(n) {
-    if (lang !== null && n[lang]) return n[lang];
-    return n.fr || n.de || n.it || n.en || n || '';
+    if (typeof n === 'string') return n;
+    if (lang !== null && hasObjKey(n, lang)) return n[lang];
+    return n.fr || n.de || n.it || n.en || '';
   };
   var getDatasetFormats = function(res) {
     return _.uniq(_.map(res,
@@ -63,6 +67,7 @@ function generateView(url, packages, options) {
   // Pass the dataset results to the template
   for (var i in packages) {
     var dso = packages[i];
+    console.log(dso);
     var dsogroupname = (dso.groups.length === 0) ? '' :
           Object.keys(dso.groups[0].display_name).length ?
             getLangDefault(dso.groups[0].display_name) :

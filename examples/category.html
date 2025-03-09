@@ -12,6 +12,7 @@
 
     <!-- Some example styles -->
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://ckan.org/static/img/ckan.ico">
 
   </head>
   <body>
@@ -23,33 +24,28 @@
     </p>
     <p>&lt; Back to <a href="index.html">basic tests</a>.</p>
 
-    <h2>Search datasets with selection of category.</h2>
+    <h2>Search BFS datasets with selection of category.</h2>
     <hr>
 
     <ul id="groupSelector" class="nav nav-pills nav-stacked">
-      <li class="nav-item break-word active">
-        <a href="#" data-group="geography">
-          Geography
+      <li class="nav-item break-word">
+        <a href="#" data-group="heal">
+          Health
         </a>
       </li>
       <li class="nav-item break-word">
-        <a href="#" data-group="politics">
-          Politics
+        <a href="#" data-group="just">
+          Justice
         </a>
       </li>
       <li class="nav-item break-word">
-        <a href="#" data-group="education">
-          Education
+        <a href="#" data-group="envi">
+          Environment
         </a>
       </li>
       <li class="nav-item break-word">
-        <a href="#" data-group="social-security">
-          Social security
-        </a>
-      </li>
-      <li class="nav-item break-word">
-        <a href="#" data-group="population">
-          Population
+        <a href="#" data-group="econ">
+          Economics
         </a>
       </li>
   </ul>
@@ -59,8 +55,8 @@
     <script>
     function embedGroup(group) {
       CKANembed.search('#example-2', 'https://opendata.swiss/', {
-        fq:       'organization:openglam groups:' + group,
-        rows:     20,
+        fq:       'organization:bundesamt-fur-statistik-bfs groups:' + group,
+        rows:     5,
         lang:     'de',
         sort:     'title_string_de asc',
         noresult: 'Sorry, nothing found',
@@ -75,9 +71,6 @@
           '</div>'
       });
     }
-
-    // Default category
-    embedGroup('geography');
 
     // Selector
     $('#groupSelector a').click(function(e) {
