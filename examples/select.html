@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>CKAN Embed Test</title>
+
+    <!-- Load the widget for local dev: -->
+    <script src="../node_modules/jquery/dist/jquery.js" charset="utf8"></script>
+    <script src="../node_modules/ckan/dist/ckan.bundle.js" charset="utf8"></script>
+    <script src="../dist/ckan-embed.js"></script>
+
+    <!-- For production: -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/opendata-swiss/ckan-embed@1/dist/ckan-embed.bundle.js"></script>    
+    -->
+
+    <!-- Some example styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://ckan.org/static/img/ckan.ico">
+    <style>
+      body { background: black; color: lightgreen; }
+    </style>
+  </head>
+  <body>
+    <h1>CKAN Embed another CKAN</h1>
+    <hr>
+
+
+  <form id="form-widget">
+    <input type="text" id="input-search"><button type="submit">Search ...</button>
+  </form>
+
+  <div id="ex-1" style="padding:1em 2em; margin-top:2em"></div>
+
+  <hr>
+  <div id="ex-2" style="padding:1em 2em; margin-top:2em"></div>
+  
+  <script>
+
+    CKANembed.datasets('#ex-2', 'https://data.tourismdata.ch/dataset/swisscom-mobility-insights-portal');
+
+    $('#form-widget').submit(function(e) {
+      e.preventDefault(); e.stopPropagation();
+      var q = $('#input-search').val();
+      // Run the test query
+      CKANembed.datasets('#ex-1', 'https://data.tourismdata.ch/', {
+        q: q,
+        rows: 3,
+        noresult: 'Try another search',
+        template:
+          '<div class="ckan-dataset">' +
+          '<b><%= ds.title %></b>' +
+          '<p class="dsc"><%= CKANembed.truncate(ds.description, 140) %></p>' +
+          '<a href="<%= ds.url %>">🛈</a>  ' +
+          '<small class="fmt"><%= ds.formats %> &bull; <%= ds.license %></small>' +
+          '</div>'
+        },
+        function() {
+          $('.ckan-dataset').click(selectDataset);
+        });
+    });
+
+    function selectDataset() {
+      d_url = $(this).find('a').attr('href');
+      alert(d_url)
+    }
+  </script>
+
+  </body>
+</html>
