@@ -130,7 +130,9 @@ function parametrize(options) {
     options = {};
     if (!validate(request.q)) return null;
   } else {
-    if (!_.isUndefined(options.q)) {
+    if (_.isUndefined(options)) {
+      return null;
+    } else if (!_.isUndefined(options.q)) {
       request.q = options.q;
       if (!validate(request.q)) return null;
     } else if (!_.isUndefined(options.fq)) {
